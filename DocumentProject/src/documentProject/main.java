@@ -9,6 +9,7 @@ public class main {
         try {
             DocumentLibrary.getLibrary().saveToTxtFile();
             DocumentLibrary.getLibrary().readInFilesToList();
+            System.out.println(DocumentLibrary.getLibrary().getDocumentList().get(DocumentLibrary.getLibrary().getDocumentList().size()-1).getTitle());
         } catch (IOException e) {
             e.printStackTrace();
         }

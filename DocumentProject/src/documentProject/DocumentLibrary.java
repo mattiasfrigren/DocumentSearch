@@ -14,9 +14,9 @@ import java.util.List;
  */
 public class DocumentLibrary {
     private static DocumentLibrary library;
-    private List<TxtDocument> documentList = new ArrayList<>();
-    private static String title;
-    private static String textContent;
+    private static List<TxtDocument> documentList = new ArrayList<>();
+    private static String title ="bla";
+    private static String textContent = "blabla";
 
 
     public static DocumentLibrary getLibrary(){
@@ -27,10 +27,11 @@ public class DocumentLibrary {
 
     public void createTxtDocument(){
         System.out.println("Please name your document: ");
-        title ="hej";
+        title ="tjäna";
         System.out.println("write what you want to the document");
-        textContent = "bärs";
+        textContent = "fredagsbärs";
     }
+
     public void saveToTxtFile() throws IOException {
         File txtFile = new File("C:\\Users\\91matfri\\IdeaProjects\\documentgroup\\DocumentProject\\src\\documentPackage\\"+title+".txt");
         if (txtFile.createNewFile()){
@@ -51,6 +52,26 @@ public class DocumentLibrary {
         }
     }
 
+    public void CreateNewTxtFile() throws IOException {
+        createTxtDocument();
+        saveToTxtFile();
+        addToList(new TxtDocument(title,textContent));
+    }
+
+    public void printAllTitles(){
+        if (documentList.size()>0){
+        for (TxtDocument title : documentList) {
+            System.out.println(title.getTitle());
+        }}
+    }
+    public void printTextContent(String title){
+        for (TxtDocument txtContent : documentList) {
+            if (txtContent.getTitle().equals(title)){
+                System.out.println(txtContent.getTextContent());
+            }
+        }
+    }
+
     public void deleteTxtDocument(TxtDocument txtDocument){
         documentList.remove(txtDocument);
     }
@@ -60,7 +81,8 @@ public class DocumentLibrary {
     }
 
     public void addToList(TxtDocument document){
-        documentList.add(document);
+        if (!documentList.contains(document.getTitle())){
+        documentList.add(document);}
     }
 
     public List<TxtDocument> getDocumentList() {

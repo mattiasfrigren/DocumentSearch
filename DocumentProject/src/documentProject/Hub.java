@@ -1,10 +1,11 @@
 package documentProject;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Hub {
     private static Hub hub = new Hub();
-
+    private static DocumentLibrary library = DocumentLibrary.getLibrary();
     private Hub() {
         int input = 0;
         System.out.println("Welcome to main menu.");
@@ -14,6 +15,8 @@ public class Hub {
             input = sc.nextInt();
             switch (input) {
                 case 1:
+                    try { library.CreateNewTxtFile(); }
+                    catch (IOException e) { e.printStackTrace(); }
                     break;
                 case 2:
                     break;
