@@ -5,12 +5,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Hub {
-    private static Hub hub;
-    static {
-        try { hub = new Hub(); } catch (IOException e) { e.printStackTrace();
-        }
-    }
-    private Hub() throws IOException {
+    public static void displayHub() throws IOException {
         int input = 0;
         while (input !=4) {
             Scanner sc = new Scanner(System.in);
@@ -39,10 +34,7 @@ public class Hub {
             }
         }
     }
-    private void printMenu() {
+    private static void printMenu() {
         System.out.println("Main menu\n[1] Document menu\n[2] Search menu\n[3] Sort menu\n[4] Exit system.");
-    }
-    public static Hub getHub() {
-        return hub;
     }
 }
