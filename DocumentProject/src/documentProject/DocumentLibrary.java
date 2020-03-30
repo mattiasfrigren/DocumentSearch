@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * @author 91matfri
@@ -17,6 +18,7 @@ public class DocumentLibrary {
     private static List<TxtDocument> documentList = new ArrayList<>();
     private static String title ="bla";
     private static String textContent = "blabla";
+    Scanner sc = new Scanner(System.in);
 
 
     public static DocumentLibrary getLibrary(){
@@ -33,7 +35,7 @@ public class DocumentLibrary {
     }
 
     public void saveToTxtFile() throws IOException {
-        File txtFile = new File("C:\\Users\\91matfri\\IdeaProjects\\documentgroup\\DocumentProject\\src\\documentPackage\\"+title+".txt");
+        File txtFile = new File(DifferentLocalStoragePaths.docPath+"\\DocumentProject\\src\\documentPackage\\"+title+".txt");
         if (txtFile.createNewFile()){
             FileWriter writer = new FileWriter(txtFile);
             writer.write(textContent);
@@ -42,17 +44,23 @@ public class DocumentLibrary {
         else System.out.println("file already exists");
     }
 
-    public void readInFilesToList() throws IOException {
-        File getAllFiles =new File("C:\\Users\\91matfri\\IdeaProjects\\documentgroup\\DocumentProject\\src\\documentPackage");
-        File[] fileArray =getAllFiles.listFiles();
+    public void readInFilesToList() {
+        File getAllFiles = new File(DifferentLocalStoragePaths.docPath+"\\DocumentProject\\src\\documentPackage");
+        File[] fileArray = getAllFiles.listFiles();
         for (File txtfile: fileArray) {
             if (txtfile.isFile()){
-                addToList(new TxtDocument(txtfile.getName(),Files.readString(Paths.get(txtfile.getPath()), StandardCharsets.UTF_8)));
+                String textContent = null;
+                try {
+                    textContent = Files.readString(Paths.get(txtfile.getPath()), StandardCharsets.UTF_8);
+                } catch (IOException e) {
+                    System.out.println("Warning: The file '" + txtfile.getPath() + "' could not be read.");
+                }
+                addToList(new TxtDocument(txtfile.getName(), textContent));
             }
         }
     }
 
-    public void CreateNewTxtFile() throws IOException {
+    public void createNewTxtFile() throws IOException {
         createTxtDocument();
         saveToTxtFile();
         addToList(new TxtDocument(title,textContent));
@@ -71,6 +79,16 @@ public class DocumentLibrary {
             }
         }
     }
+    //TODO Must add method to remove document from localstorage
+    public void deleteTxtFileFromLocalAndList() throws IOException {
+        System.out.println("Please enter the title you want to remove:");
+        String deleteTitle = sc.next();
+        for (TxtDocument elements: documentList) {
+            if (elements.getTitle().equals(deleteTitle)) {
+                deleteTxtDocument(elements);
+            }
+        }
+    }
 
     public void deleteTxtDocument(TxtDocument txtDocument){
         documentList.remove(txtDocument);
@@ -83,6 +101,10 @@ public class DocumentLibrary {
     public void addToList(TxtDocument document){
         if (!documentList.contains(document.getTitle())){
         documentList.add(document);}
+    }
+    public void chooseTitleToPrint() {
+        System.out.println("Please enter the title you want to print:");
+        printTextContent(sc.next());
     }
 
     public List<TxtDocument> getDocumentList() {

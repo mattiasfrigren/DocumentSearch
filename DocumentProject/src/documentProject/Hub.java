@@ -1,17 +1,13 @@
 package documentProject;
 
-
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Hub {
-    private static Hub hub = new Hub();
-    private static DocumentLibrary library = DocumentLibrary.getLibrary();
-    private Hub() {
+    public static void displayHub() {
         int input = 0;
-        System.out.println("Welcome to main menu.");
-        while (input !=7) {
+        while (input !=4) {
             Scanner sc = new Scanner(System.in);
             printMenu();
             try{
@@ -20,25 +16,17 @@ public class Hub {
                 System.out.println("That's not a number. Please try again.");
                 continue;
             }
-
             switch (input) {
                 case 1:
-
-                    try { library.CreateNewTxtFile(); }
-                    catch (IOException e) { e.printStackTrace(); }
+                    Submenus.showHandleDocumentMenu();
                     break;
-
-                case 2:
+                    case 2:
+                    Submenus.searchMenu();
                     break;
                 case 3:
+                    Submenus.sortMenu();
                     break;
                 case 4:
-                    break;
-                case 5:
-                    break;
-                case 6:
-                    break;
-                case 7:
                     System.out.println("Goodbye");
                     break;
                 default:
@@ -46,27 +34,7 @@ public class Hub {
             }
         }
     }
-    private void printMenu() {
-/*
-        System.out.println("[1] Read .txt from computer and store it.");
-        System.out.println("[2] Print a document.");
-        System.out.println("[3] Sort words in a specific document.");
-        System.out.println("[4] Sort words in all documents.");
-        System.out.println("[5] Search in a specific document.");
-        System.out.println("[6] Search in all documents.");
-        System.out.println("[7] Exit system.");
-*/
-
-        System.out.println(
-                "[1] Read .txt from computer and store it.\n" +
-                "[2] Print a document.\n" +
-                "[3] Sort words in a specific document.\n" +
-                "[4] Sort words in all documents.\n" +
-                "[5] Search in a specific document.\n" +
-                "[6] Search in all documents.\n" +
-                "[7] Exit system.");
-    }
-    public static Hub getHub() {
-        return hub;
+    private static void printMenu() {
+        System.out.println("Main menu\n[1] Document menu\n[2] Search menu\n[3] Sort menu\n[4] Exit system.");
     }
 }
