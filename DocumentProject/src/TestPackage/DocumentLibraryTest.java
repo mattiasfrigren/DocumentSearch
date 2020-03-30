@@ -34,7 +34,7 @@ class DocumentLibraryTest {
             testLibrary.saveToTxtFile();
             File testfile = new File("");
             assertFalse(testfile.exists());
-        testfile= new File(DifferentLocalStoragePaths.mattiasPath+"\\" +
+        testfile= new File(DifferentLocalStoragePaths.docPath+"\\" +
                 "DocumentProject\\src\\documentPackage\\"+testLibrary.getTitle()+".txt");
         assertFalse(testfile.createNewFile());
         assertTrue(testfile.exists());
@@ -44,7 +44,7 @@ class DocumentLibraryTest {
     @Test
     void readAllFilesTest() throws IOException {
         int i=0;
-        File allTestFIles = new File(DifferentLocalStoragePaths.mattiasPath+"\\DocumentProject\\src\\documentPackage");
+        File allTestFIles = new File(DifferentLocalStoragePaths.docPath+"\\DocumentProject\\src\\documentPackage");
         File[] fileArr = allTestFIles.listFiles();
         testLibrary.readInFilesToList();
         assertTrue(fileArr.length == testLibrary.getDocumentList().size());
@@ -55,7 +55,7 @@ class DocumentLibraryTest {
     }
     @Test
     void deleteFileTest() throws IOException {
-        File testFile = new File(DifferentLocalStoragePaths.mattiasPath+"\\DocumentProject\\src\\documentPackage\\testFile.txt");
+        File testFile = new File(DifferentLocalStoragePaths.docPath+"\\DocumentProject\\src\\documentPackage\\testFile.txt");
         testFile.createNewFile();
         testLibrary.deleteTxtFile(testFile);
         assertFalse(testFile.exists());

@@ -35,7 +35,7 @@ public class DocumentLibrary {
     }
 
     public void saveToTxtFile() throws IOException {
-        File txtFile = new File(DifferentLocalStoragePaths.mattiasPath+"\\DocumentProject\\src\\documentPackage\\"+title+".txt");
+        File txtFile = new File(DifferentLocalStoragePaths.docPath+"\\DocumentProject\\src\\documentPackage\\"+title+".txt");
         if (txtFile.createNewFile()){
             FileWriter writer = new FileWriter(txtFile);
             writer.write(textContent);
@@ -45,7 +45,7 @@ public class DocumentLibrary {
     }
 
     public void readInFilesToList() throws IOException {
-        File getAllFiles =new File(DifferentLocalStoragePaths.mattiasPath+"\\DocumentProject\\src\\documentPackage");
+        File getAllFiles =new File(DifferentLocalStoragePaths.docPath+"\\DocumentProject\\src\\documentPackage");
         File[] fileArray =getAllFiles.listFiles();
         for (File txtfile: fileArray) {
             if (txtfile.isFile()){
