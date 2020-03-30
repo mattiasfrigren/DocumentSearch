@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Submenus {
     static Scanner sc = new Scanner(System.in);
-    public static void showHandleDocumentMenu() throws IOException {
+    public static void showHandleDocumentMenu() {
         int userInput = 0;
         while (userInput!=5) {
             System.out.println("What would you like to do?\n[1] Create new document\n[2] Delete document\n" +
@@ -13,10 +13,18 @@ public class Submenus {
             userInput = sc.nextInt();
             switch (userInput) {
                 case 1:
-                    DocumentLibrary.getLibrary().createNewTxtFile();
+                    try {
+                        DocumentLibrary.getLibrary().createNewTxtFile();
+                    } catch (IOException e) {
+                        System.out.println("Was an error");
+                    }
                     break;
                 case 2:
-                    DocumentLibrary.getLibrary().deleteTxtFileFromLocalAndList();
+                    try {
+                        DocumentLibrary.getLibrary().deleteTxtFileFromLocalAndList();
+                    } catch (IOException e) {
+                        System.out.println("Was an error");
+                    }
                     break;
                 case 3:
                     DocumentLibrary.getLibrary().printAllTitles();

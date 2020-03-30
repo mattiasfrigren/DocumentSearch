@@ -44,12 +44,18 @@ public class DocumentLibrary {
         else System.out.println("file already exists");
     }
 
-    public void readInFilesToList() throws IOException {
-        File getAllFiles =new File(DifferentLocalStoragePaths.docPath+"\\DocumentProject\\src\\documentPackage");
-        File[] fileArray =getAllFiles.listFiles();
+    public void readInFilesToList() {
+        File getAllFiles = new File(DifferentLocalStoragePaths.docPath+"\\DocumentProject\\src\\documentPackage");
+        File[] fileArray = getAllFiles.listFiles();
         for (File txtfile: fileArray) {
             if (txtfile.isFile()){
-                addToList(new TxtDocument(txtfile.getName(),Files.readString(Paths.get(txtfile.getPath()), StandardCharsets.UTF_8)));
+                String textContent = null;
+                try {
+                    textContent = Files.readString(Paths.get(txtfile.getPath()), StandardCharsets.UTF_8);
+                } catch (IOException e) {
+                    System.out.println("Warning: The file '" + txtfile.getPath() + "' could not be read.");
+                }
+                addToList(new TxtDocument(txtfile.getName(), textContent));
             }
         }
     }

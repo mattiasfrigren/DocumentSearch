@@ -5,7 +5,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Hub {
-    public static void displayHub() throws IOException {
+    public static void displayHub() {
         int input = 0;
         while (input !=4) {
             Scanner sc = new Scanner(System.in);
