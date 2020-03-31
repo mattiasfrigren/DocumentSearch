@@ -20,7 +20,6 @@ public class DocumentLibrary {
     private static String textContent = "blabla";
     Scanner sc = new Scanner(System.in);
 
-
     public static DocumentLibrary getLibrary(){
         if (library ==null){
             library = new DocumentLibrary(); }
@@ -86,6 +85,7 @@ public class DocumentLibrary {
         for (TxtDocument elements: documentList) {
             if (elements.getTitle().equals(deleteTitle)) {
                 deleteTxtDocument(elements);
+                deleteTxtFile(deleteTitle);
             }
         }
     }
@@ -93,15 +93,19 @@ public class DocumentLibrary {
     public void deleteTxtDocument(TxtDocument txtDocument){
         documentList.remove(txtDocument);
     }
-
-    public void deleteTxtFile(File txtFile){
-        txtFile.delete();
+    //TODO redo method
+    public void deleteTxtFile(String txtFile){
+        File deleteFile = new File(DifferentLocalStoragePaths.docPath+
+                "\\DocumentProject\\src\\documentPackage\\"+txtFile+".txt");
+        if (deleteFile.isFile()){
+        deleteFile.delete();}
     }
 
     public void addToList(TxtDocument document){
         if (!documentList.contains(document.getTitle())){
         documentList.add(document);}
     }
+
     public void chooseTitleToPrint() {
         System.out.println("Please enter the title you want to print:");
         printTextContent(sc.next());

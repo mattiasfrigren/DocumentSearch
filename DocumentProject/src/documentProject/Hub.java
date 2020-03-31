@@ -1,8 +1,9 @@
 package documentProject;
 
-import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+//TODO create singelton and add Exception class
 
 public class Hub {
     public static void displayHub() {
@@ -14,8 +15,7 @@ public class Hub {
             input = sc.nextInt();
             }catch (InputMismatchException exception){
                 System.out.println("That's not a number. Please try again.");
-                continue;
-            }
+                continue; }
             switch (input) {
                 case 1:
                     Submenus.showHandleDocumentMenu();

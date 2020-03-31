@@ -3,6 +3,7 @@ package documentProject;
 import java.io.IOException;
 import java.util.Scanner;
 
+//TODO add exception class
 public class Submenus {
     static Scanner sc = new Scanner(System.in);
     public static void showHandleDocumentMenu() {

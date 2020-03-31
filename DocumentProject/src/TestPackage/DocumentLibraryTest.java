@@ -57,7 +57,7 @@ class DocumentLibraryTest {
     void deleteFileTest() throws IOException {
         File testFile = new File(DifferentLocalStoragePaths.docPath+"\\DocumentProject\\src\\documentPackage\\testFile.txt");
         testFile.createNewFile();
-        testLibrary.deleteTxtFile(testFile);
+        testLibrary.deleteTxtFile(testFile.getName());
         assertFalse(testFile.exists());
 
     }
