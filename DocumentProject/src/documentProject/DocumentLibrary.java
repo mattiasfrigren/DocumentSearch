@@ -87,11 +87,9 @@ public class DocumentLibrary {
     }
 
     public String cutString(String pathName){
-        StringBuilder cut = new StringBuilder();
-        cut.delete(pathName.length()-4,pathName.length());
-        System.out.println(pathName);
-        return pathName;
+        return (String) pathName.subSequence(0,pathName.length()-4);
     }
+
 
     public void deleteTxtDocument(TxtDocument txtDocument){
         documentList.remove(txtDocument);

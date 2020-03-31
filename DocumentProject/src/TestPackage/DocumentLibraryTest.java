@@ -72,11 +72,11 @@ public class DocumentLibraryTest {
         assertFalse(testLibrary.getDocumentList().contains(testTxt));
     }
     @Test
-   public void cutString(){
+    void cutString(){
         String txt = "test.txt";
-        testLibrary.cutString(txt);
-        assertEquals("test",txt);
+        assertEquals("test",testLibrary.cutString(txt));
     }
+
 }
 
 
