@@ -1,17 +1,19 @@
 package documentProject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
 
 public class Submenus {
-    static Scanner sc = new Scanner(System.in);
     public static void showHandleDocumentMenu() {
         int userInput = 0;
         while (userInput!=5) {
             System.out.println("What would you like to do?\n[1] Create new document\n[2] Delete document\n" +
                     "[3] Print all titles in the library\n[4] Print a document\n[5] Exit to main menu");
-            userInput = sc.nextInt();
+            userInput = InputReader.getInt();
             switch (userInput) {
+                case InputReader.INPUT_FAILURE:
+                    break;
                 case 1:
                     try {
                         DocumentLibrary.getLibrary().createNewTxtFile();
@@ -44,8 +46,10 @@ public class Submenus {
         while (userInput!=4) {
             System.out.println("What would you like to do?\n[1] Search for a title\n[2] Search for a phrase in a document\n" +
                     "[3] Search for a phrase in all documents\n[4] Exit to main menu");
-            userInput = sc.nextInt();
+            userInput = InputReader.getInt();
             switch (userInput) {
+                case InputReader.INPUT_FAILURE:
+                    break;
                 case 1:
                     break;
                 case 2:
@@ -61,16 +65,49 @@ public class Submenus {
     }
     public static void sortMenu() {
         int userInput = 0;
-        while (userInput!=3) {
-            System.out.println("What would you like to do?\n[1] Sort titles\n[2] Sort words in a document\n" +
-                    "[3] Exit to main menu");
-            userInput = sc.nextInt();
+        while (userInput!=4) {
+            System.out.println(
+                    "What would you like to do?\n" +
+                            "[1] Sort titles\n" +
+                            "[2] Sort words in a document\n" +
+                            "[3] Sort words in all documents\n" +
+                            "[4] Exit to main menu");
+            userInput = InputReader.getInt();
             switch (userInput) {
+                case InputReader.INPUT_FAILURE:
+                    break;
                 case 1:
                     break;
                 case 2:
+                    System.out.println("Enter txt file name(s)");
+                    String filename = InputReader.getString();
+                    try {
+                        String[] words = new WordsReader().readFile(DifferentLocalStoragePaths.docPath + "\\out\\production\\DocumentProject\\documentPackage\\" + filename);
+                        new BubbleSort().sort(words);
+                        System.out.println("Words in " + filename + ":");
+                        for (String word: words) {
+                            System.out.println(word);
+                        }
+                        System.out.println();
+                        System.out.println();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case 3:
+                    try {
+                        File directory = new File(DifferentLocalStoragePaths.docPath + "\\out\\production\\DocumentProject\\documentPackage\\");
+                        String[] words = new WordsReader().readAllFiles(directory);
+                        new BubbleSort().sort(words, (word1, word2) -> word1.compareToIgnoreCase(word2)); //upper case and lower case together
+                        System.out.println("Words in all files:");
+                        for (String word: words) {
+                            System.out.println(word);
+                        }
+                        System.out.println();
+                        System.out.println();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 default:
                     System.out.println("Its not an alternative in the menu, please try again.");

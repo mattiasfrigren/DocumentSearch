@@ -18,7 +18,6 @@ public class DocumentLibrary {
     private static List<TxtDocument> documentList = new ArrayList<>();
     private static String title ="bla";
     private static String textContent = "blabla";
-    Scanner sc = new Scanner(System.in);
 
 
     public static DocumentLibrary getLibrary(){
@@ -82,7 +81,7 @@ public class DocumentLibrary {
     //TODO Must add method to remove document from localstorage
     public void deleteTxtFileFromLocalAndList() throws IOException {
         System.out.println("Please enter the title you want to remove:");
-        String deleteTitle = sc.next();
+        String deleteTitle = InputReader.getString();
         for (TxtDocument elements: documentList) {
             if (elements.getTitle().equals(deleteTitle)) {
                 deleteTxtDocument(elements);
@@ -104,7 +103,7 @@ public class DocumentLibrary {
     }
     public void chooseTitleToPrint() {
         System.out.println("Please enter the title you want to print:");
-        printTextContent(sc.next());
+        printTextContent(InputReader.getString());
     }
 
     public List<TxtDocument> getDocumentList() {
