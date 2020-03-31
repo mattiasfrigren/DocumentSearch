@@ -1,12 +1,15 @@
 package documentProject;
 
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 //TODO create singelton and add Exception class
 
 public class Hub {
-    public static void displayHub() {
+    private static Hub hub;
+
+    public static void displayHub() throws IOException {
         int input = 0;
         while (input !=4) {
             Scanner sc = new Scanner(System.in);
@@ -37,4 +40,12 @@ public class Hub {
     private static void printMenu() {
         System.out.println("Main menu\n[1] Document menu\n[2] Search menu\n[3] Sort menu\n[4] Exit system.");
     }
+
+    public static Hub getHub() {
+        if (hub ==null){
+            hub = new Hub();
+        }
+        return hub;
+    }
+
 }

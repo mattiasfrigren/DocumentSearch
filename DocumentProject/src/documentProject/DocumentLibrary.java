@@ -28,9 +28,9 @@ public class DocumentLibrary {
 
     public void createTxtDocument(){
         System.out.println("Please name your document: ");
-        title ="tjäna";
+        title ="nästatitle";
         System.out.println("write what you want to the document");
-        textContent = "fredagsbärs";
+        textContent = "next content";
     }
 
     public void saveToTxtFile() throws IOException {
@@ -43,20 +43,15 @@ public class DocumentLibrary {
         else System.out.println("file already exists");
     }
 
-    public void readInFilesToList() {
+    public void readInFilesToList() throws IOException {
         File getAllFiles = new File(DifferentLocalStoragePaths.docPath+"\\DocumentProject\\src\\documentPackage");
         File[] fileArray = getAllFiles.listFiles();
         for (File txtfile: fileArray) {
             if (txtfile.isFile()){
-                String textContent = null;
-                try {
-                    textContent = Files.readString(Paths.get(txtfile.getPath()), StandardCharsets.UTF_8);
-                } catch (IOException e) {
-                    System.out.println("Warning: The file '" + txtfile.getPath() + "' could not be read.");
-                }
-                addToList(new TxtDocument(txtfile.getName(), textContent));
+                addToList(new TxtDocument(txtfile.getName(),Files.readString(Paths.get(txtfile.getPath()), StandardCharsets.UTF_8)));
             }
         }
+        System.out.println(documentList.get(0).getTitle());
     }
 
     public void createNewTxtFile() throws IOException {
@@ -86,8 +81,16 @@ public class DocumentLibrary {
             if (elements.getTitle().equals(deleteTitle)) {
                 deleteTxtDocument(elements);
                 deleteTxtFile(deleteTitle);
+                break;
             }
         }
+    }
+
+    public String cutString(String pathName){
+        StringBuilder cut = new StringBuilder();
+        cut.delete(pathName.length()-4,pathName.length());
+        System.out.println(pathName);
+        return pathName;
     }
 
     public void deleteTxtDocument(TxtDocument txtDocument){
@@ -96,7 +99,7 @@ public class DocumentLibrary {
     //TODO redo method
     public void deleteTxtFile(String txtFile){
         File deleteFile = new File(DifferentLocalStoragePaths.docPath+
-                "\\DocumentProject\\src\\documentPackage\\"+txtFile+".txt");
+                "\\DocumentProject\\src\\documentPackage\\"+txtFile);
         if (deleteFile.isFile()){
         deleteFile.delete();}
     }
