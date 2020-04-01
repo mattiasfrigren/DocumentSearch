@@ -33,14 +33,17 @@ public class DocumentLibrary {
         textContent = "fredagsbärs";
     }
 
-    public void saveToTxtFile() throws IOException {
+    public void saveToTxtFile() throws LibraryException {
         File txtFile = new File(DifferentLocalStoragePaths.docPath+"\\DocumentProject\\src\\documentPackage\\"+title+".txt");
-        if (txtFile.createNewFile()){
-            FileWriter writer = new FileWriter(txtFile);
-            writer.write(textContent);
-            writer.close();
+        try {
+            if (txtFile.createNewFile()) {
+                FileWriter writer = new FileWriter(txtFile);
+                writer.write(textContent);
+                writer.close();
+            } else throw new LibraryException("file already exists"); //put LibraryException
+        } catch (IOException ex){
+            throw new LibraryException("Could not create file", ex);
         }
-        else System.out.println("file already exists");
     }
 
     public void readInFilesToList() {
@@ -59,7 +62,7 @@ public class DocumentLibrary {
         }
     }
 
-    public void createNewTxtFile() throws IOException {
+    public void createNewTxtFile() throws LibraryException {
         createTxtDocument();
         saveToTxtFile();
         addToList(new TxtDocument(title,textContent));

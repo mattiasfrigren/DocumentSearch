@@ -3,6 +3,7 @@ package documentProject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Submenus {
     public static void showHandleDocumentMenu() {
@@ -10,14 +11,14 @@ public class Submenus {
         while (userInput!=5) {
             System.out.println("What would you like to do?\n[1] Create new document\n[2] Delete document\n" +
                     "[3] Print all titles in the library\n[4] Print a document\n[5] Exit to main menu");
-            userInput = InputReader.getInt();
+            userInput = InputReader.getInt(System.in);
             switch (userInput) {
                 case InputReader.INPUT_FAILURE:
                     break;
                 case 1:
                     try {
                         DocumentLibrary.getLibrary().createNewTxtFile();
-                    } catch (IOException e) {
+                    } catch (LibraryException e) {
                         System.out.println("Was an error");
                     }
                     break;
@@ -46,7 +47,7 @@ public class Submenus {
         while (userInput!=4) {
             System.out.println("What would you like to do?\n[1] Search for a title\n[2] Search for a phrase in a document\n" +
                     "[3] Search for a phrase in all documents\n[4] Exit to main menu");
-            userInput = InputReader.getInt();
+            userInput = InputReader.getInt(System.in);
             switch (userInput) {
                 case InputReader.INPUT_FAILURE:
                     break;
@@ -72,18 +73,21 @@ public class Submenus {
                             "[2] Sort words in a document\n" +
                             "[3] Sort words in all documents\n" +
                             "[4] Exit to main menu");
-            userInput = InputReader.getInt();
+            userInput = InputReader.getInt(System.in);
             switch (userInput) {
                 case InputReader.INPUT_FAILURE:
                     break;
                 case 1:
+
+
+
                     break;
                 case 2:
-                    System.out.println("Enter txt file name(s)");
+                    System.out.println("Enter txt file name");
                     String filename = InputReader.getString();
                     try {
                         String[] words = new WordsReader().readFile(DifferentLocalStoragePaths.docPath + "\\out\\production\\DocumentProject\\documentPackage\\" + filename);
-                        new BubbleSort().sort(words);
+                        new QuickSort().sort(words);
                         System.out.println("Words in " + filename + ":");
                         for (String word: words) {
                             System.out.println(word);
@@ -91,14 +95,15 @@ public class Submenus {
                         System.out.println();
                         System.out.println();
                     } catch (FileNotFoundException e) {
-                        e.printStackTrace();
+                        System.out.println("Not a real doc");
                     }
                     break;
                 case 3:
                     try {
                         File directory = new File(DifferentLocalStoragePaths.docPath + "\\out\\production\\DocumentProject\\documentPackage\\");
                         String[] words = new WordsReader().readAllFiles(directory);
-                        new BubbleSort().sort(words, (word1, word2) -> word1.compareToIgnoreCase(word2)); //upper case and lower case together
+                        //new QuickSort().sort(words, (word1, word2) -> word1.compareToIgnoreCase(word2)); //upper case and lower case together
+                        new QuickSort().sort(words);
                         System.out.println("Words in all files:");
                         for (String word: words) {
                             System.out.println(word);

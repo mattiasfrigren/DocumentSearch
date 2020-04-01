@@ -2,6 +2,7 @@ package TestPackage;
 
 import documentProject.DifferentLocalStoragePaths;
 import documentProject.DocumentLibrary;
+import documentProject.LibraryException;
 import documentProject.TxtDocument;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +31,7 @@ class DocumentLibraryTest {
         DocumentLibrary.getLibrary().getDocumentList().get(DocumentLibrary.getLibrary().getDocumentList().size()-1).getTitle().equals("hej");
     }
     @Test
-    void saveToTxtFileTest() throws IOException {
+    void saveToTxtFileTest() throws IOException, LibraryException {
             testLibrary.saveToTxtFile();
             File testfile = new File("");
             assertFalse(testfile.exists());

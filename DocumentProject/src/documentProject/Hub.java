@@ -5,7 +5,7 @@ public class Hub {
         int input = 0;
         while (input !=4) {
             printMenu();
-            input = InputReader.getInt();
+            input = InputReader.getInt(System.in);
             switch (input) {
                 case InputReader.INPUT_FAILURE:
                     continue;
