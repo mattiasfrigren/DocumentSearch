@@ -26,6 +26,7 @@ public class Submenus {
                     DocumentLibrary.getLibrary().chooseTitleToPrint();
                     break;
                 case 5:
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("Its not an alternative in the menu, please try again.");

@@ -48,10 +48,9 @@ public class DocumentLibrary {
         File[] fileArray = getAllFiles.listFiles();
         for (File txtfile: fileArray) {
             if (txtfile.isFile()){
-                addToList(new TxtDocument(txtfile.getName(),Files.readString(Paths.get(txtfile.getPath()), StandardCharsets.UTF_8)));
+                addToList(new TxtDocument(cutString(txtfile.getName()),Files.readString(Paths.get(txtfile.getPath()), StandardCharsets.UTF_8)));
             }
         }
-        System.out.println(documentList.get(0).getTitle());
     }
 
     public void createNewTxtFile() throws IOException {
@@ -60,11 +59,14 @@ public class DocumentLibrary {
         addToList(new TxtDocument(title,textContent));
     }
 
-    public void printAllTitles(){
+    public String printAllTitles(){
+        String viewTitle="";
         if (documentList.size()>0){
         for (TxtDocument title : documentList) {
             System.out.println(title.getTitle());
+            viewTitle = title.getTitle()+ "\n" +viewTitle;
         }}
+        return viewTitle;
     }
     public void printTextContent(String title){
         for (TxtDocument txtContent : documentList) {
@@ -76,7 +78,7 @@ public class DocumentLibrary {
     //TODO Must add method to remove document from localstorage
     public void deleteTxtFileFromLocalAndList() throws IOException {
         System.out.println("Please enter the title you want to remove:");
-        String deleteTitle = sc.next();
+        String deleteTitle = title;
         for (TxtDocument elements: documentList) {
             if (elements.getTitle().equals(deleteTitle)) {
                 deleteTxtDocument(elements);
@@ -90,21 +92,28 @@ public class DocumentLibrary {
         return (String) pathName.subSequence(0,pathName.length()-4);
     }
 
-
     public void deleteTxtDocument(TxtDocument txtDocument){
         documentList.remove(txtDocument);
     }
     //TODO redo method
     public void deleteTxtFile(String txtFile){
         File deleteFile = new File(DifferentLocalStoragePaths.docPath+
-                "\\DocumentProject\\src\\documentPackage\\"+txtFile);
+                "\\DocumentProject\\src\\documentPackage\\"+txtFile+".txt");
         if (deleteFile.isFile()){
-        deleteFile.delete();}
+        deleteFile.delete();
+        }
     }
 
     public void addToList(TxtDocument document){
-        if (!documentList.contains(document.getTitle())){
+        if (!documentList.contains(document.getTitle()) && documentExists(document.getTitle())){
         documentList.add(document);}
+    }
+    public boolean documentExists(String docName){
+        for (TxtDocument document: documentList) {
+            if (document.getTitle().equals(docName)){
+                return false; }
+        }
+        return true;
     }
 
     public void chooseTitleToPrint() {

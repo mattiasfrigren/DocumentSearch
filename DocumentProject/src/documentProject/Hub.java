@@ -10,6 +10,7 @@ public class Hub {
     private static Hub hub;
 
     public static void displayHub() throws IOException {
+
         int input = 0;
         while (input !=4) {
             Scanner sc = new Scanner(System.in);
@@ -31,6 +32,7 @@ public class Hub {
                     break;
                 case 4:
                     System.out.println("Goodbye");
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("Its not an alternative in the menu, please try again.");
