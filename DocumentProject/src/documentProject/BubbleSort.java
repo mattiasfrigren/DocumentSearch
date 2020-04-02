@@ -6,7 +6,7 @@ package documentProject;
 
 import java.util.Comparator;
 
-public class BubbleSort {
+public class BubbleSort implements SortingAlgorithm {
 
     // T is a place holder for the type of
     // T generics parameters (int, double, string, char and so on)

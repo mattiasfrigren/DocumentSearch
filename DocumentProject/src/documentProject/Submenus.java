@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashSet;
 
 public class Submenus {
     public static void showHandleDocumentMenu() {
@@ -77,17 +79,18 @@ public class Submenus {
             switch (userInput) {
                 case InputReader.INPUT_FAILURE:
                     break;
+
                 case 1:
 
-
-
                     break;
+
                 case 2:
                     System.out.println("Enter txt file name");
                     String filename = InputReader.getString();
                     try {
                         String[] words = new WordsReader().readFile(DifferentLocalStoragePaths.docPath + "\\out\\production\\DocumentProject\\documentPackage\\" + filename);
-                        new QuickSort().sort(words);
+                        words = removeDuplicates(words);
+                        quickSort(words);
                         System.out.println("Words in " + filename + ":");
                         for (String word: words) {
                             System.out.println(word);
@@ -98,12 +101,13 @@ public class Submenus {
                         System.out.println("Not a real doc");
                     }
                     break;
+
                 case 3:
                     try {
                         File directory = new File(DifferentLocalStoragePaths.docPath + "\\out\\production\\DocumentProject\\documentPackage\\");
                         String[] words = new WordsReader().readAllFiles(directory);
-                        //new QuickSort().sort(words, (word1, word2) -> word1.compareToIgnoreCase(word2)); //upper case and lower case together
-                        new QuickSort().sort(words);
+                        words = removeDuplicates(words);
+                        quickSort(words);
                         System.out.println("Words in all files:");
                         for (String word: words) {
                             System.out.println(word);
@@ -118,5 +122,22 @@ public class Submenus {
                     System.out.println("Its not an alternative in the menu, please try again.");
             }
         }
+    }
+
+
+
+    // remove duplicates of words when we print out sorted words
+    private static String[] removeDuplicates(String[] words) {
+        HashSet<String> set = new HashSet<>();
+        for (String word : words) {
+            set.add(word);
+        }
+        return set.toArray(new String[0]);
+    }
+
+    public static void quickSort(String[] words) {
+        //upper case and lower case sorted together
+        Comparator<String> caseInsensitiveStringComparator = (word1, word2) -> word1.compareToIgnoreCase(word2);
+        new QuickSort<String>(caseInsensitiveStringComparator).sort(words);
     }
 }

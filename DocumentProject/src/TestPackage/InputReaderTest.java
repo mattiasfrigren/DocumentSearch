@@ -10,6 +10,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class InputReaderTest {
 
+
+    @Test
+    void getInt_test() {
+
+    }
+
     @Test
     void getInt_whitespace_stopsReading() {
         int[] readValues = new int[]{
@@ -30,7 +36,7 @@ public class InputReaderTest {
         };
 
         int actual = InputReader.getInt(in);
-        assertEquals(3, actual);
+        assertEquals( 3, actual);
     }
 
     @Test

@@ -9,8 +9,8 @@ public class InputReader {
 
     public static final int INPUT_FAILURE = -1;
 
-    //public static int getInt ()
-    //Scanner sc = new Scanner(System.in)
+    //public static int getInt () {
+    //Scanner sc = new Scanner(System.in) {
 
     public static int getInt(InputStream in) {
         Scanner sc = new Scanner(in);
@@ -24,7 +24,6 @@ public class InputReader {
 
     static String getString() {
         Scanner sc = new Scanner(System.in);
-
         return sc.next();
     }
 }

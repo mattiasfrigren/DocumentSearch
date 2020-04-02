@@ -19,10 +19,23 @@ public class WordsReader {
     private String[] readFile(InputStream stream) {
         Scanner scanner = new Scanner(stream);
         ArrayList<String> words = new ArrayList<>();
-        while (scanner.hasNext())
-            words.add(scanner.next());
+        while (scanner.hasNext()) {
+            String next = scanner.next();
+            if (isWord(next))
+            words.add(next);
+        }
         return words.toArray(new String[0]); //the placeholder to the Array to tell what the type of the Array it is
         //the Object Array we return as a String Array
+    }
+
+    // boolean for excluding the numbers and other cases from the sorted data, so only words will be printed out in the console
+    private boolean isWord(String next) {
+        for (int n = 0; n < 10; n++) {
+            if (next.contains(n + "")) {
+                return false;
+            }
+        }
+        return true;
     }
 
 
@@ -34,4 +47,5 @@ public class WordsReader {
         }
         return allWords.toArray(new String[0]);
     }
+
 }
