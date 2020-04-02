@@ -1,58 +1,47 @@
 package TestPackage;
 
 import documentProject.InputReader;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.MissingFormatArgumentException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class InputReaderTest {
+    InputReader testreader = new InputReader();
 
     @Test
-    void getInt_whitespace_stopsReading() {
-        int[] readValues = new int[]{
-                (int)'3',
-                (int)' ',
-                (int)'x',
-                -1
-        };
-
-        InputStream in = new InputStream() {
-            int currentPosition = 0;
-            @Override
-            public int read() {
-                int value = readValues[currentPosition];
-                currentPosition++;
-                return value;
-            }
-        };
-
-        int actual = InputReader.getInt(in);
-        assertEquals(3, actual);
+    void getIntTestWithDouble() {
+        testreader.getIntThrowed = false;
+        testreader.inputtedNumber = 4.3;
+        testreader.getInt();
+        Assertions.assertTrue(testreader.getIntThrowed);
+    }
+    @Test
+    void getIntTestWithString() {
+        testreader.getIntThrowed = false;
+        testreader.inputtedNumber = "hej";
+        testreader.getInt();
+        Assertions.assertTrue(testreader.getIntThrowed);
+    }
+    @Test
+    void getIntTestWithInt() {
+        testreader.inputtedNumber = 99;
+        Assertions.assertEquals(99,testreader.getInt());
     }
 
     @Test
-    void getInt_multipleDigits_decimal() {
-        int[] readValues = new int[]{
-                (int)'1',
-                (int)'3',
-                (int)'\n',
-                -1
-        };
-
-        InputStream in = new InputStream() {
-            int currentPosition = 0;
-            @Override
-            public int read() {
-                int value = readValues[currentPosition];
-                currentPosition++;
-                return value;
-            }
-        };
-
-        int actual = InputReader.getInt(in);
-        assertEquals(13, actual);
+    void testGetStringWithNoInput() {
+        testreader.inputtedName = "";
+        testreader.getString();
+        Assertions.assertTrue(testreader.getStringThrowed);
+    }
+    @Test
+    void testGetStringWithAValidString() {
+        testreader.inputtedName = "Banan";
+        Assertions.assertEquals("Banan",testreader.getString());
     }
 }
