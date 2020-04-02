@@ -9,19 +9,17 @@ import java.util.Comparator;
 
 public class QuickSort<T> {
 
-    final Comparator<T> comparator;
+    final Comparator<T> comparator; // here it is placed not to pass it through all functions, not to duplicate the code
 
-    public QuickSort(Comparator<T> comparator){
-        this.comparator  = comparator;
+    public QuickSort(Comparator<T> comparator){ //constructor to create a quick sort with the comparator
+        this.comparator = comparator;
     }
 
-    //partition method we need to sort by dividing the array into 2 parts: sorted and unsorted
-
-    public void sort (T[] array) {
+    public void sort (T[] array) { //this is added to be as an interface
         sort(array, 0, array.length - 1);
     }
 
-    private void sort (T[] array, int begin, int end) {
+    private void sort (T[] array, int begin, int end) { //recursive function with the algorithm
 
         if (begin < end) {
             int partitionIndex = partition(array, begin, end);
@@ -31,14 +29,13 @@ public class QuickSort<T> {
         }
     }
 
-    //take the last element as a pivot
-    //partition method
+    //partition method we need to sort by dividing the array into 2 parts: sorted and unsorted
     private int partition (T[] arr, int begin, int end) {
 
         T pivot = arr [end]; // take the last element as a pivot
         int i = (begin-1); //element i supposed to take the begin place
 
-        for (int j = begin; j < end; j++) { //if j is a begin, than we need to swap it with the element i
+        for (int j = begin; j < end; j++) { //from i to j we need to swap the elements if they are on wrong position comparing to pivot
             if (comparator.compare(arr[j], pivot) <= 0) {
                 i++;
 
@@ -52,8 +49,8 @@ public class QuickSort<T> {
     }
 
     private void swap(T[] array, int i, int j) {
-        T swapTemp = array[i]; // for i if it is bigger than a temporal element
-        array[i] = array[j]; // that bigger i takes end place
+        T swapTemp = array[i]; // for i if it is bigger than a temporal element, that bigger i takes place towards the end
+        array[i] = array[j];
         array[j] = swapTemp; // so that bigger i moves to the right side if its temporally operated
     }
 }

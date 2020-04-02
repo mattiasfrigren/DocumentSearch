@@ -2,7 +2,6 @@ package documentProject;
 
 /**
  * Anara
- */
 
 import java.util.Comparator;
 
@@ -43,3 +42,4 @@ public class BubbleSort implements SortingAlgorithm {
         array[i2] = tmp;
     }
 }
+*/

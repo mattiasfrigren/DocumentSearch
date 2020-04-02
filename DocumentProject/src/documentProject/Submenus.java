@@ -124,8 +124,6 @@ public class Submenus {
         }
     }
 
-
-
     // remove duplicates of words when we print out sorted words
     private static String[] removeDuplicates(String[] words) {
         HashSet<String> set = new HashSet<>();
