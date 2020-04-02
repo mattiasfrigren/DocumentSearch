@@ -49,9 +49,8 @@ public class QuickSortTest {
     public void Words_can_be_sorted () {
 
         final String[] array = new String[]{"Anara", "armadillo", "aardvark"};
-        Submenus.quickSort(array); // method quickSort taken from the Submenu to implement the comparator from there to here and bbe able to test the String array
+        Submenus.quickSort(array); // method quickSort taken from the Submenu to implement the comparator from there to here and be able to test the String array
         assertArrayEquals(new String[]{"aardvark", "Anara", "armadillo"}, array);
 
     }
-
 }

@@ -28,7 +28,7 @@ public class WordsReader {
         //the Object Array we return as a String Array
     }
 
-    // boolean for excluding the numbers and other cases from the sorted data, so only words will be printed out in the console
+    // boolean for excluding the numbers from the sorted data, so only words will be printed out in the console
     private boolean isWord(String next) {
         for (int n = 0; n < 10; n++) {
             if (next.contains(n + "")) {

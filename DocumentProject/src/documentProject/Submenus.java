@@ -82,6 +82,17 @@ public class Submenus {
 
                 case 1:
 
+                    String[] titles = new File(DifferentLocalStoragePaths.docPath + "\\out\\production\\DocumentProject\\documentPackage\\")
+                            .list();
+                    quickSort(titles);
+                    System.out.println();
+                    assert titles != null;
+                    for (String word: titles) {
+                        System.out.println(word);
+                    }
+                    System.out.println();
+                    System.out.println();
+
                     break;
 
                 case 2:
