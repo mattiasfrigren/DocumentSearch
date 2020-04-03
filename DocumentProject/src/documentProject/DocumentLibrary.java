@@ -14,11 +14,11 @@ import java.util.Scanner;
  * @author 91matfri
  */
 public class DocumentLibrary {
+    private static InputReader reader = new InputReader();
     private static DocumentLibrary library;
     private static List<TxtDocument> documentList = new ArrayList<>();
     private static String title ="bla";
     private static String textContent = "blabla";
-    Scanner sc = new Scanner(System.in);
 
     public static DocumentLibrary getLibrary(){
         if (library ==null){
@@ -28,9 +28,9 @@ public class DocumentLibrary {
 
     public void createTxtDocument(){
         System.out.println("Please name your document: ");
-        title ="nästatitle";
+        title =reader.getString();
         System.out.println("write what you want to the document");
-        textContent = "next content";
+        textContent = reader.getString();
     }
 
     public void saveToTxtFile() throws IOException {
@@ -78,7 +78,8 @@ public class DocumentLibrary {
     //TODO Must add method to remove document from localstorage
     public void deleteTxtFileFromLocalAndList() throws IOException {
         System.out.println("Please enter the title you want to remove:");
-        String deleteTitle = title;
+        String deleteTitle = reader.getString();
+
         for (TxtDocument elements: documentList) {
             if (elements.getTitle().equals(deleteTitle)) {
                 deleteTxtDocument(elements);
@@ -118,7 +119,7 @@ public class DocumentLibrary {
 
     public void chooseTitleToPrint() {
         System.out.println("Please enter the title you want to print:");
-        printTextContent(sc.next());
+        printTextContent(reader.getString());
     }
 
     public List<TxtDocument> getDocumentList() {
