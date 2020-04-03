@@ -6,7 +6,8 @@ import java.util.Scanner;
 //TODO add exception class
 public class Submenus {
     private static InputReader reader = new InputReader();
-    public static void showHandleDocumentMenu() throws IOException {
+    private KMPSearch search = new KMPSearch();
+    public void showHandleDocumentMenu() throws IOException {
         int userInput = 0;
         while (userInput!=5) {
             System.out.println("What would you like to do?\n[1] Create new document\n[2] Delete document\n" +
@@ -32,7 +33,7 @@ public class Submenus {
             }
         }
     }
-    public static void searchMenu() {
+    public void searchMenu() {
         int userInput = 0;
         while (userInput!=4) {
             System.out.println("What would you like to do?\n[1] Search for a title\n[2] Search for a phrase in a document\n" +
@@ -42,6 +43,7 @@ public class Submenus {
                 case 1:
                     break;
                 case 2:
+                    search.runSearch();
                     break;
                 case 3:
                     break;
@@ -52,7 +54,7 @@ public class Submenus {
             }
         }
     }
-    public static void sortMenu() {
+    public void sortMenu() {
         int userInput = 0;
         while (userInput!=3) {
             System.out.println("What would you like to do?\n[1] Sort titles\n[2] Sort words in a document\n" +

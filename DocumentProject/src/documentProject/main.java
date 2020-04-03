@@ -12,7 +12,8 @@ public class main  /*extends Application */{
         try {
             DocumentLibrary.getLibrary().readInFilesToList();
          //   launch(args);
-            Hub.displayHub();
+           Hub hub = new Hub();
+           hub.displayHub();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -38,8 +38,7 @@ public class DocumentLibrary {
         if (txtFile.createNewFile()){
             FileWriter writer = new FileWriter(txtFile);
             writer.write(textContent);
-            writer.close();
-        }
+            writer.close(); }
         else System.out.println("file already exists");
     }
 

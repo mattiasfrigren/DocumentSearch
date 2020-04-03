@@ -1,31 +1,30 @@
 package documentProject;
 
 import java.io.IOException;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 //TODO create singelton and add Exception class
 
 public class Hub {
     private static Hub hub;
     private static InputReader reader = new InputReader();
+    private Submenus submenus = new Submenus();
 
-    public static void displayHub() throws IOException {
+    public void displayHub() throws IOException {
         int input = 0;
         while (input != 4) {
             printMenu();
-            input = InputReader.getInt();
+            input = reader.getInt();
             switch (input) {
                 case -1:
                     break;
                 case 1:
-                    Submenus.showHandleDocumentMenu();
+                    submenus.showHandleDocumentMenu();
                     break;
                 case 2:
-                    Submenus.searchMenu();
+                    submenus.searchMenu();
                     break;
                 case 3:
-                    Submenus.sortMenu();
+                    submenus.sortMenu();
                     break;
                 case 4:
                     System.out.println("Goodbye");
@@ -37,7 +36,7 @@ public class Hub {
 
         }
     }
-        private static void printMenu () {
+        private void printMenu () {
             System.out.println("Main menu\n[1] Document menu\n[2] Search menu\n[3] Sort menu\n[4] Exit system.");
         }
 
