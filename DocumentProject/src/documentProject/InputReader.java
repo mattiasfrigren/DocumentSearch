@@ -34,9 +34,9 @@ public class InputReader {
     }
 
     public static String getString() {
+        sc = new Scanner(System.in);
       /* outcomment scannerinput to test the function*/
         inputtedName =sc.nextLine();
-        sc = new Scanner(System.in);
         try {
             if (inputtedName.equals("")) {
                 getStringThrowed = true;
