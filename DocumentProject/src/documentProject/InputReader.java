@@ -29,6 +29,7 @@ public class InputReader {
         catch   (ArithmeticException ae) {
             System.out.println("Number to large, cant read");
             sc = new Scanner(System.in);
+            return -1;
         }
         return (int) inputtedNumber;
     }

@@ -8,6 +8,7 @@ public class Hub {
     private static Hub hub;
     private static InputReader reader = new InputReader();
     private Submenus submenus = new Submenus();
+    private Hub(){}
 
     public void displayHub() throws IOException {
         int input = 0;

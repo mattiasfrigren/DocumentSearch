@@ -17,8 +17,9 @@ public class DocumentLibrary {
     private static InputReader reader = new InputReader();
     private static DocumentLibrary library;
     private static List<TxtDocument> documentList = new ArrayList<>();
-    private static String title ="bla";
-    private static String textContent = "blabla";
+    private static String title ="";
+    private static String textContent = "";
+
 
     public static DocumentLibrary getLibrary(){
         if (library ==null){
@@ -28,9 +29,13 @@ public class DocumentLibrary {
 
     public void createTxtDocument(){
         System.out.println("Please name your document: ");
-        title =reader.getString();
+        while (title.equals("")) {
+            title = reader.getString();
+        }
         System.out.println("write what you want to the document");
-        textContent = reader.getString();
+        while (textContent.equals("")) {
+            textContent = reader.getString();
+        }
     }
 
     public void saveToTxtFile() throws IOException {
@@ -38,7 +43,8 @@ public class DocumentLibrary {
         if (txtFile.createNewFile()){
             FileWriter writer = new FileWriter(txtFile);
             writer.write(textContent);
-            writer.close(); }
+            writer.close();
+            System.out.println("\""+title+"\" was created.");}
         else System.out.println("file already exists");
     }
 
@@ -58,33 +64,52 @@ public class DocumentLibrary {
         addToList(new TxtDocument(title,textContent));
     }
 
-    public String printAllTitles(){
+    public void printAllTitles(){
         String viewTitle="";
         if (documentList.size()>0){
-        for (TxtDocument title : documentList) {
+            for (TxtDocument title : documentList) {
             System.out.println(title.getTitle());
             viewTitle = title.getTitle()+ "\n" +viewTitle;
-        }}
-        return viewTitle;
+            }
+        }
+        else {System.out.println("The library is empty.");
+        }
     }
     public void printTextContent(String title){
-        for (TxtDocument txtContent : documentList) {
-            if (txtContent.getTitle().equals(title)){
+        boolean titleFound = false;
+        if (documentList.size()>0){
+            for (TxtDocument txtContent : documentList) {
+                if (txtContent.getTitle().equals(title)){
                 System.out.println(txtContent.getTextContent());
+                titleFound = true;
+                }
             }
+            if (!titleFound) {
+                System.out.println("There is no \""+title+"\" in the library.");
+            }
+        }
+        else {System.out.println("The library is empty.");
         }
     }
     //TODO Must add method to remove document from localstorage
     public void deleteTxtFileFromLocalAndList() throws IOException {
+        String deleteTitle = "";
+        boolean deleteSuccess = false;
         System.out.println("Please enter the title you want to remove:");
-        String deleteTitle = reader.getString();
-
-        for (TxtDocument elements: documentList) {
-            if (elements.getTitle().equals(deleteTitle)) {
-                deleteTxtDocument(elements);
-                deleteTxtFile(deleteTitle);
-                break;
+        while (deleteTitle.equals("")) {
+            deleteTitle = reader.getString();
+            for (TxtDocument elements : documentList) {
+                if (elements.getTitle().equals(deleteTitle)) {
+                    deleteTxtDocument(elements);
+                    deleteTxtFile(deleteTitle);
+                    System.out.println("\"" + deleteTitle + "\" was deleted.");
+                    deleteSuccess = true;
+                    break;
+                }
             }
+        }
+        if (!deleteSuccess) {
+            System.out.println("There is no title \"" + deleteTitle + "\" and no file was deleted.");
         }
     }
 
@@ -117,10 +142,13 @@ public class DocumentLibrary {
     }
 
     public void chooseTitleToPrint() {
+        String title = "";
         System.out.println("Please enter the title you want to print:");
-        printTextContent(reader.getString());
+        while (title.equals("")) {
+            title=reader.getString();
+        }
+        printTextContent(title);
     }
-
     public List<TxtDocument> getDocumentList() {
         return documentList;
     }
