@@ -30,8 +30,7 @@ public class DocumentLibrary {
         System.out.println("Please name your document: ");
         title =reader.getString();
         System.out.println("write what you want to the document");
-        textContent = reader.getString();
-    }
+        textContent = reader.getString(); }
 
     public void saveToTxtFile() throws IOException {
         File txtFile = new File(DifferentLocalStoragePaths.docPath+"\\DocumentProject\\src\\documentPackage\\"+title+".txt");
