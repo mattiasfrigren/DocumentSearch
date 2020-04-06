@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class KMPSearch {
-    //TODO FIX SO ALL STRINGS ARE LOWERCASE
-
     private InputReader reader = new InputReader();
     private DocumentLibrary library = DocumentLibrary.getLibrary();
+    private String maxAppearing = "";
 
     public int[] searchKMP(String textContent, String searchWord){
         CompileText compile = new CompileText();
@@ -31,33 +30,84 @@ public class KMPSearch {
         }
         return convertListToArray(searchResult);
     }
-
-    public void runSearch(){
-        String textContent = getTextContet();
-        System.out.println("give me a search word please");
-        String searchWord = reader.getString();
-        int[] result = searchKMP(textContent,searchWord);
-        for (int index :result) {
-            System.out.println("o förekommer vid index: " + index);
+    //The method only use other methods so no test is needed
+    public void getIndexes(){
+        String textContent = getTextContet(enterTitle());
+        if (!textContent.equals("")) {
+            String searchWord = enterSearchWord();
+            int[] result = searchKMP(textContent, searchWord);
+            if (result.length != 0) {
+                System.out.print("Ordet \"" + searchWord + "\" förekommer vid index:");
+                for (int index : result) {
+                    System.out.print(" " + index + ",");
+                }
+                System.out.println("");
+            } else {
+                System.out.println("Ordet förekommer inte i dokumentet.");
+            }
+        }
+        else {
+            System.out.println("Titeln finns inte i biblioteket.");
         }
     }
-    private String getTextContet(){
+    //The method only uses other methods.
+    public void countWords(){
+        String textContent = getTextContet(enterTitle());
+        if (!textContent.equals("")) {
+            String searchWord = enterSearchWord();
+            System.out.println("Ordet \"" + searchWord + "\" förekommer " + getTimes(textContent, searchWord) + " gånger i dokumentet.");
+        }
+        else {
+            System.out.println("Titeln finns inte i biblioteket.");
+        }
+    }
+    public int getTimes(String content,String word){
+        int[] result = searchKMP(content.toLowerCase(),word.toLowerCase());
+        return result.length;
+    }
+    //Only uses readermethod
+    public String enterSearchWord() {
+        System.out.println("give me a search word please");
+        return reader.getString().toLowerCase();
+    }
+    //Hard to test beacuse you have to create documents.
+    //TODO Enable multiwriter if two documents are equal.
+    public void compareDocuments() {
+        maxAppearing = "";
+        String wordToSearch = enterSearchWord();
+        int max = getMax(wordToSearch);
+        System.out.println("The word "+wordToSearch+" appear most in the document \""+maxAppearing+"\" ("+max+" times).");
+    }
+    public int getMax(String wordToSearch) {
+        int max = 0;
+        int current;
+        for (int i = 0; i<library.getDocumentList().size();i++) {
+            current= getTimes(getTextContet(library.getDocumentList().get(i).getTitle()),wordToSearch);
+            if (current>max) {
+                maxAppearing = library.getDocumentList().get(i).getTitle();
+                max = current;
+            }
+        }
+        return max;
+    }
+    public String enterTitle() {
         System.out.println("please give me the title");
-        String title= reader.getString().toLowerCase();
+        return reader.getString().toLowerCase();
+    }
+    //Cant test this because of some reason I cant understand
+    public String getTextContet(String title){
         for (TxtDocument doc:library.getDocumentList()) {
             if (doc.getTitle().equals(title)){
                 return doc.getTextContent();
             }
         }
-        return null;
+        return "";
     }
-
-
-
-    private int[] convertListToArray(List<Integer> result){
+    public int[] convertListToArray(List<Integer> result){
         int[] sendBackResult = new int[result.size()];
         for (int i = 0; i <result.size() ; i++) {
             sendBackResult[i] = result.get(i); }
         return sendBackResult;
     }
+
 }

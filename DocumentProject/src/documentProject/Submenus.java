@@ -35,19 +35,24 @@ public class Submenus {
     }
     public void searchMenu() {
         int userInput = 0;
-        while (userInput!=4) {
-            System.out.println("What would you like to do?\n[1] Search for a title\n[2] Search for a phrase in a document\n" +
-                    "[3] Search for a phrase in all documents\n[4] Exit to main menu");
+        while (userInput!=5) {
+            System.out.println("What would you like to do?\n[1] Search for a title.\n[2] Search for a word in a document " +
+                    "and print indexes of word(s).\n[3] Search for a word in a document and get number of times appearing."+
+                    "\n[4] Search for a word in all documents and show most times appearing.\n[5] Exit to main menu.");
             userInput = reader.getInt();
             switch (userInput) {
                 case 1:
                     break;
                 case 2:
-                    search.runSearch();
+                    search.getIndexes();
                     break;
                 case 3:
+                    search.countWords();
                     break;
                 case 4:
+                    search.compareDocuments();
+                    break;
+                case 5:
                     break;
                 default:
                     System.out.println("Its not an alternative in the menu, please try again.");
