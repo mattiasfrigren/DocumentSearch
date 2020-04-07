@@ -37,7 +37,7 @@ public class DocumentLibrary {
             textContent = reader.getString();
         }
     }
-
+//test
     public void saveToTxtFile() throws IOException {
         File txtFile = new File(DifferentLocalStoragePaths.docPath+"\\DocumentProject\\src\\documentPackage\\"+title+".txt");
         if (txtFile.createNewFile()){
