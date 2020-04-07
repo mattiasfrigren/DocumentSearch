@@ -1,6 +1,11 @@
 package documentProject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Scanner;
 
 //TODO add exception class
@@ -67,14 +72,72 @@ public class Submenus {
             userInput = reader.getInt();
             switch (userInput) {
                 case 1:
+                    String[] titles = new File(DifferentLocalStoragePaths.docPath + "\\out\\production\\DocumentProject\\documentPackage\\")
+                            .list();
+                    quickSort(titles);
+                    System.out.println();
+                    //assert titles != null;
+                    if (titles != null) { //if we don't need a warning that titles are null. It's a safe way.
+                        for (String word: titles) {
+                            System.out.println(word);
+                        }
+                    }
+                    System.out.println();
+                    System.out.println();
+
                     break;
+
                 case 2:
+                    System.out.println("Enter txt file name");
+                    String filename = InputReader.getString();
+
+                        String newWords = DocumentLibrary.getLibrary().getTextContent(filename);
+                        String[] words = new String[] {newWords};
+                        words = removeDuplicates(words);
+                        quickSort(words);
+                        System.out.println("Words in " + filename + ":");
+                        for (String word: words) {
+                            System.out.println(word);
+                        }
+                        System.out.println();
+                        System.out.println();
+
                     break;
-                case 3:
-                    break;
+
+              /*  case 3:
+                    try {
+                        File directory = new File(DifferentLocalStoragePaths.docPath + "\\DocumentProject\\documentPackage\\");
+                        String[] words = new WordsReader().readAllFiles(directory);
+                        words = removeDuplicates(words);
+                        quickSort(words);
+                        System.out.println("Words in all files:");
+                        for (String word: words) {
+                            System.out.println(word);
+                        }
+                        System.out.println();
+                        System.out.println();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    break; */
                 default:
                     System.out.println("Its not an alternative in the menu, please try again.");
             }
         }
+    }
+
+    // remove duplicates of words when we print out sorted words
+    private static String[] removeDuplicates(String[] words) {
+        HashSet<String> set = new HashSet<>();
+        for (String word : words) {
+            set.add(word);
+        }
+        return set.toArray(new String[0]);
+    }
+
+    public static void quickSort(String[] words) {
+        //upper case and lower case sorted together
+        Comparator<String> caseInsensitiveStringComparator = (word1, word2) -> word1.compareToIgnoreCase(word2);
+        new QuickSort<String>(caseInsensitiveStringComparator).sort(words);
     }
 }

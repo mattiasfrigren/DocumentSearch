@@ -28,6 +28,8 @@ public class DocumentLibrary {
     }
 
     public void createTxtDocument(){
+        title = "";
+        textContent = "";
         System.out.println("Please name your document: ");
         while (title.equals("")) {
             title = reader.getString();
@@ -165,6 +167,14 @@ public class DocumentLibrary {
 
     public static String getTextContent() {
         return textContent;
+    }
+    public String getTextContent(String title) {
+        for (TxtDocument text:documentList) {
+            if (text.getTitle().equals(title)) {
+            return text.getTextContent();
+             }
+        }
+        return null;
     }
 
     public static void setTextContent(String textContent) {
