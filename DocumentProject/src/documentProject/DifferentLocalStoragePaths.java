@@ -11,5 +11,5 @@ public class DifferentLocalStoragePaths {
     private static String henriksPath = "C:\\Users\\78henlar\\desktop\\javaprojekt\\documentgroup";
     private static String anarasPath = "C:\\Users\\88anazhu\\IdeaProjects\\documentgroup";
 
-    public static String docPath =  henriksPath;
+    public static String docPath =  mattiasPath;
 }
