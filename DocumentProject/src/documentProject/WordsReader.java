@@ -21,7 +21,9 @@ public class WordsReader {
         ArrayList<String> words = new ArrayList<>();
         while (scanner.hasNext()) {
             String next = scanner.next();
+
             if (isWord(next))
+
             words.add(next);
         }
         return words.toArray(new String[0]); //the placeholder to the Array to tell what the type of the Array it is
@@ -37,6 +39,7 @@ public class WordsReader {
         }
         return true;
     }
+
 
 
     public String[] readAllFiles(File directory) throws FileNotFoundException {

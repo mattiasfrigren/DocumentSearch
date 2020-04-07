@@ -86,9 +86,11 @@ public class Submenus {
                             .list();
                     quickSort(titles);
                     System.out.println();
-                    assert titles != null;
-                    for (String word: titles) {
-                        System.out.println(word);
+                    //assert titles != null;
+                    if (titles != null) { //if we don't need a warning that titles are null. It's a safe way.
+                        for (String word: titles) {
+                            System.out.println(word);
+                        }
                     }
                     System.out.println();
                     System.out.println();

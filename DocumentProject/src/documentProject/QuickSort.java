@@ -15,6 +15,7 @@ public class QuickSort<T> {
         this.comparator = comparator;
     }
 
+    //kind of an overload to divide the method in 2 parts
     public void sort (T[] array) { //this is added to be as an interface
         sort(array, 0, array.length - 1);
     }
@@ -32,7 +33,7 @@ public class QuickSort<T> {
     //partition method we need to sort by dividing the array into 2 parts: sorted and unsorted
     private int partition (T[] arr, int begin, int end) {
 
-        T pivot = arr [end]; // take the last element as a pivot
+        T pivot = arr [end]; // take the last element (value, and split the array in the middle) as a pivot
         int i = (begin-1); //element i supposed to take the begin place
 
         for (int j = begin; j < end; j++) { //from i to j we need to swap the elements if they are on wrong position comparing to pivot
