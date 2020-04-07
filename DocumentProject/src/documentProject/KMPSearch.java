@@ -76,9 +76,15 @@ public class KMPSearch {
         maxAppearing = "";
         String wordToSearch = enterSearchWord();
         int max = getMax(wordToSearch);
-        System.out.println("The word "+wordToSearch+" appear most in the document \""+maxAppearing+"\" ("+max+" times).");
+        if (max>0) {
+            System.out.println("The word " + wordToSearch + " appear most in the document(s) \"" + maxAppearing + "\" (" + max + " times).");
+        }
+        else {
+        System.out.println("The word " + wordToSearch + " does not appear in any document.");
+        }
     }
     public int getMax(String wordToSearch) {
+        ArrayList<Integer> hitList = new ArrayList<>();
         int max = 0;
         int current;
         for (int i = 0; i<library.getDocumentList().size();i++) {
@@ -87,8 +93,18 @@ public class KMPSearch {
                 maxAppearing = library.getDocumentList().get(i).getTitle();
                 max = current;
             }
-        }
+            hitList.add(current);
+            }
+        checkForMultiHits(hitList,max);
         return max;
+    }
+    public void checkForMultiHits(ArrayList<Integer> hitList,int max) {
+            maxAppearing = "";
+        for (int i = 0;i<hitList.size();i++) {
+            if(hitList.get(i)==max) {
+                maxAppearing += library.getDocumentList().get(i).getTitle()+", ";
+            }
+        }
     }
     public String enterTitle() {
         System.out.println("please give me the title");
