@@ -53,7 +53,7 @@ public class DocumentLibrary {
         File[] fileArray = getAllFiles.listFiles();
         for (File txtfile: fileArray) {
             if (txtfile.isFile()){
-                addToList(new TxtDocument(cutString(txtfile.getName()),Files.readString(Paths.get(txtfile.getPath()), StandardCharsets.UTF_8)));
+                addToList(new TxtDocument(cutString(txtfile.getName()),Files.readString(Paths.get(txtfile.getPath()), StandardCharsets.ISO_8859_1)));
             }
         }
     }
@@ -92,7 +92,7 @@ public class DocumentLibrary {
         else {System.out.println("The library is empty.");
         }
     }
-    //TODO Must add method to remove document from localstorage
+
     public void deleteTxtFileFromLocalAndList() throws IOException {
         String deleteTitle = "";
         boolean deleteSuccess = false;
@@ -121,7 +121,7 @@ public class DocumentLibrary {
     public void deleteTxtDocument(TxtDocument txtDocument){
         documentList.remove(txtDocument);
     }
-    //TODO redo method
+
     public void deleteTxtFile(String txtFile){
         File deleteFile = new File(DifferentLocalStoragePaths.docPath+
                 "\\DocumentProject\\src\\documentPackage\\"+txtFile+".txt");

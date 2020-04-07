@@ -37,7 +37,7 @@ public class KMPSearch {
             String searchWord = enterSearchWord();
             int[] result = searchKMP(textContent, searchWord);
             if (result.length != 0) {
-                System.out.print("Ordet \"" + searchWord + "\" förekommer vid index:");
+                System.out.print("The Size of the Text is: "+textContent.length()+" Chars.\nOrdet \"" + searchWord + "\" förekommer vid index:");
                 for (int index : result) {
                     System.out.print(" " + index + ",");
                 }
@@ -84,28 +84,19 @@ public class KMPSearch {
         }
     }
     public int getMax(String wordToSearch) {
-        ArrayList<Integer> hitList = new ArrayList<>();
         int max = 0;
         int current;
         for (int i = 0; i<library.getDocumentList().size();i++) {
             current= getTimes(getTextContet(library.getDocumentList().get(i).getTitle()),wordToSearch);
             if (current>max) {
-                maxAppearing = library.getDocumentList().get(i).getTitle();
-                max = current;
+                maxAppearing = library.getDocumentList().get(i).getTitle()+".txt";
+                max = current; }
+            else if (current==max) {
+                maxAppearing +=", " +library.getDocumentList().get(i).getTitle()+".txt"; }
             }
-            hitList.add(current);
-            }
-        checkForMultiHits(hitList,max);
         return max;
     }
-    public void checkForMultiHits(ArrayList<Integer> hitList,int max) {
-            maxAppearing = "";
-        for (int i = 0;i<hitList.size();i++) {
-            if(hitList.get(i)==max) {
-                maxAppearing += library.getDocumentList().get(i).getTitle()+", ";
-            }
-        }
-    }
+
     public String enterTitle() {
         System.out.println("please give me the title");
         return reader.getString().toLowerCase();
