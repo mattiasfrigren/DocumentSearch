@@ -1,5 +1,7 @@
 package documentProject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -69,11 +71,7 @@ public class Submenus {
                     "[3] Exit to main menu");
             userInput = reader.getInt();
             switch (userInput) {
-                case InputReader.INPUT_FAILURE:
-                    break;
-
                 case 1:
-
                     String[] titles = new File(DifferentLocalStoragePaths.docPath + "\\out\\production\\DocumentProject\\documentPackage\\")
                             .list();
                     quickSort(titles);
@@ -92,8 +90,9 @@ public class Submenus {
                 case 2:
                     System.out.println("Enter txt file name");
                     String filename = InputReader.getString();
-                    try {
-                        String[] words = new WordsReader().readFile(DifferentLocalStoragePaths.docPath + "\\out\\production\\DocumentProject\\documentPackage\\" + filename);
+
+                        String newWords = DocumentLibrary.getLibrary().getTextContent(filename);
+                        String[] words = new String[] {newWords};
                         words = removeDuplicates(words);
                         quickSort(words);
                         System.out.println("Words in " + filename + ":");
@@ -102,14 +101,12 @@ public class Submenus {
                         }
                         System.out.println();
                         System.out.println();
-                    } catch (FileNotFoundException e) {
-                        System.out.println("Not a real doc");
-                    }
+
                     break;
 
-                case 3:
+              /*  case 3:
                     try {
-                        File directory = new File(DifferentLocalStoragePaths.docPath + "\\out\\production\\DocumentProject\\documentPackage\\");
+                        File directory = new File(DifferentLocalStoragePaths.docPath + "\\DocumentProject\\documentPackage\\");
                         String[] words = new WordsReader().readAllFiles(directory);
                         words = removeDuplicates(words);
                         quickSort(words);
@@ -122,7 +119,7 @@ public class Submenus {
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
-                    break;
+                    break; */
                 default:
                     System.out.println("Its not an alternative in the menu, please try again.");
             }
