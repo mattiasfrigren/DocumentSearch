@@ -14,11 +14,11 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class DocumentLibraryTest {
-    private DocumentLibrary testLibrary = DocumentLibrary.getLibrary();
 
     @Test
     @Order(2)
     void readAllFilesTest() throws IOException {
+        DocumentLibrary testLibrary = DocumentLibrary.getLibrary();
         int i=0;
         File allTestFIles = new File(DifferentLocalStoragePaths.docPath+"\\DocumentProject\\src\\documentPackage");
         File[] fileArr = allTestFIles.listFiles();
@@ -41,12 +41,14 @@ public class DocumentLibraryTest {
     @Test
     @Order(3)
     void createTxtDocTest() throws IOException {
-        DocumentLibrary.getLibrary().createNewTxtFile();
-        DocumentLibrary.getLibrary().getDocumentList().get(DocumentLibrary.getLibrary().getDocumentList().size()-1).getTitle().equals("tjäna");
+        DocumentLibrary testLibrary = DocumentLibrary.getLibrary();
+        testLibrary.createNewTxtFile();
+        testLibrary.getDocumentList().get(DocumentLibrary.getLibrary().getDocumentList().size()-1).getTitle().equals("tjäna");
     }
     @Test
     @Order(4)
     void saveToTxtFileTest() throws IOException {
+            DocumentLibrary testLibrary = DocumentLibrary.getLibrary();
             testLibrary.saveToTxtFile();
             File testfile = new File("");
             assertFalse(testfile.exists());
@@ -61,6 +63,7 @@ public class DocumentLibraryTest {
     @Test
     @Order(5)
     void deleteFileTest() throws IOException {
+        DocumentLibrary testLibrary = DocumentLibrary.getLibrary();
         File testFile = new File(DifferentLocalStoragePaths.docPath+"\\DocumentProject\\src\\documentPackage\\testFile.txt");
         testFile.createNewFile();
         testLibrary.deleteTxtFile((String) testFile.getName().subSequence(0,testFile.getName().length()-4));
@@ -70,6 +73,7 @@ public class DocumentLibraryTest {
     @Test
     @Order(6)
     void deleteDocumentList(){
+        DocumentLibrary testLibrary = DocumentLibrary.getLibrary();
         TxtDocument testTxt = new TxtDocument("deleteTest","deleteContent");
         testLibrary.addToList(testTxt);
         assertTrue(testLibrary.getDocumentList().contains(testTxt));
@@ -79,12 +83,14 @@ public class DocumentLibraryTest {
     @Test
     @Order(7)
     void cutString(){
+        DocumentLibrary testLibrary = DocumentLibrary.getLibrary();
         String txt = "test.txt";
         assertEquals("test",testLibrary.cutString(txt));
     }
     @Test
     @Order(8)
     void checkIfDocExists(){
+        DocumentLibrary testLibrary = DocumentLibrary.getLibrary();
         boolean trueTest = testLibrary.documentExists("fel fil");
         boolean falseTest = testLibrary.documentExists("test");
         assertFalse(falseTest);
