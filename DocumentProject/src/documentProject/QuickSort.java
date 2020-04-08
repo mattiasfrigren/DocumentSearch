@@ -8,7 +8,6 @@ import java.util.Comparator;
 
 
 public class QuickSort<T> {
-
     final Comparator<T> comparator; // here it is placed not to pass it through all functions, not to duplicate the code
 
     public QuickSort(Comparator<T> comparator){ //constructor to create a quick sort with the comparator

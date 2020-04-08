@@ -40,13 +40,26 @@ class KMPSearchTest {
     void getTextContetTest() throws IOException {
         DocumentLibrary.getLibrary().readInFilesToList();
         KMPSearch kMPSearch = new KMPSearch();
-        assertEquals("hej hallå",kMPSearch.getTextContet("heej"));
+        assertEquals("SystemTest that will make sure to be executed. we will be able to sort and search in this document.",kMPSearch.getTextContet("SystemTestTitle"));
     }
 
     @Test
     void testCompareDocuments() throws IOException {
         DocumentLibrary.getLibrary().readInFilesToList();
         KMPSearch kMPSearch = new KMPSearch();
-        assertEquals(22,kMPSearch.getMax("h"));
+        assertEquals(7,kMPSearch.getMax("s"));
+        assertTrue(kMPSearch.getMaxAppearing().equals("SystemTestTitle.txt"));
+    }
+    @Test
+    void testSearchTitle() throws IOException {
+        DocumentLibrary.getLibrary().readInFilesToList();
+        KMPSearch kMPSearch = new KMPSearch();
+        kMPSearch.titleSearch = "test";
+        kMPSearch.searchForTitle();
+        assertEquals("SystemTestTitle.txt testtesttest.txt ",kMPSearch.getMaxAppearing());
     }
 }
+
+
+
+

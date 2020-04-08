@@ -89,12 +89,13 @@ public class DocumentLibraryTest {
     }
     @Test
     @Order(8)
-    void checkIfDocExists(){
+    void checkIfDocExists() throws IOException {
+        DocumentLibrary.getLibrary().readInFilesToList();
         DocumentLibrary testLibrary = DocumentLibrary.getLibrary();
-        boolean trueTest = testLibrary.documentExists("fel fil");
-        boolean falseTest = testLibrary.documentExists("test");
-        assertFalse(falseTest);
-        assertTrue(trueTest);
+        boolean doesExist = testLibrary.documentExists("SystemTestTitle");
+        boolean doesNotExsist = testLibrary.documentExists("testp");
+        assertTrue(doesNotExsist);
+        assertFalse(doesExist);
     }
 
 }

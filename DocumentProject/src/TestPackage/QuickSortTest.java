@@ -62,7 +62,7 @@ public class QuickSortTest {
     @Test
     public void Words_can_be_sorted_by_length () {
         final String[] array = new String[]{"armadillo", "aardvark", "Anara"};
-        Comparator<String> lengthComparator = (word1, word2) -> word2.length() - word1.length();
+        Comparator<String> lengthComparator = (word1, word2) -> word1.length() - word2.length();
         new QuickSort<>(lengthComparator).sort(array);
         assertArrayEquals(new String[]{"Anara", "aardvark", "armadillo"}, array);
     }

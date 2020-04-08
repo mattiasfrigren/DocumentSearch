@@ -6,6 +6,7 @@ import java.util.List;
 public class KMPSearch {
     private InputReader reader = new InputReader();
     private DocumentLibrary library = DocumentLibrary.getLibrary();
+    public String titleSearch;
     private String maxAppearing = "";
 
     public int[] searchKMP(String textContent, String searchWord){
@@ -115,6 +116,22 @@ public class KMPSearch {
         for (int i = 0; i <result.size() ; i++) {
             sendBackResult[i] = result.get(i); }
         return sendBackResult;
+    }
+
+    public void searchForTitle(){
+        System.out.println("search for a title: ");
+        titleSearch = "test";
+        for (TxtDocument doc:library.getDocumentList()) {
+           int[] titleArray = searchKMP(doc.getTitle().toLowerCase(),titleSearch);
+            if (titleArray.length!=0){
+                maxAppearing +=doc.getTitle()+".txt ";
+            }
+        }
+        System.out.println(maxAppearing + " these document came up on the search for: " + titleSearch);
+    }
+
+    public String getMaxAppearing() {
+        return maxAppearing;
     }
 
 }

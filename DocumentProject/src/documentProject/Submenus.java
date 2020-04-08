@@ -1,5 +1,6 @@
 package documentProject;
 
+import javax.print.Doc;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -47,6 +48,7 @@ public class Submenus {
             userInput = reader.getInt();
             switch (userInput) {
                 case 1:
+                    search.searchForTitle();
                     break;
                 case 2:
                     search.getIndexes();
@@ -91,15 +93,19 @@ public class Submenus {
                     System.out.println("Enter txt file name");
                     String filename = InputReader.getString();
 
-                        String newWords = DocumentLibrary.getLibrary().getTextContent(filename);
-                        String[] words = new String[] {newWords};
+                        String[] words = DocumentLibrary.getLibrary().getTextContent(filename);
                         words = removeDuplicates(words);
                         quickSort(words);
                         System.out.println("Words in " + filename + ":");
                         for (String word: words) {
                             System.out.println(word);
                         }
-                        System.out.println();
+                    try {
+                        DocumentLibrary.getLibrary().updateFile(filename,String.join(" ",words));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println();
                         System.out.println();
 
                     break;
@@ -122,6 +128,7 @@ public class Submenus {
                     break; */
                 default:
                     System.out.println("Its not an alternative in the menu, please try again.");
+                    break;
             }
         }
     }

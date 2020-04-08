@@ -1,5 +1,6 @@
 package documentProject;
 
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -32,11 +33,13 @@ public class DocumentLibrary {
         textContent = "";
         System.out.println("Please name your document: ");
         while (title.equals("")) {
-            title = reader.getString();
+           // title = reader.getString();
+            title = "SystemTestTitle";
         }
         System.out.println("write what you want to the document");
         while (textContent.equals("")) {
-            textContent = reader.getString();
+            //textContent = reader.getString();
+            textContent = "SystemTest that will make sure to be executed. we will be able to sort and search in this document.";
         }
     }
 //test
@@ -48,6 +51,13 @@ public class DocumentLibrary {
             writer.close();
             System.out.println("\""+title+"\" was created.");}
         else System.out.println("file already exists");
+    }
+
+    public void updateFile(String title,String textContent) throws IOException {
+        File txtFile = new File(DifferentLocalStoragePaths.docPath+"\\DocumentProject\\src\\documentPackage\\"+title+".txt");
+        FileWriter writer = new FileWriter(txtFile);
+        writer.append(textContent);
+        writer.close();
     }
 
     public void readInFilesToList() throws IOException {
@@ -137,11 +147,12 @@ public class DocumentLibrary {
         documentList.add(document);}
     }
     public boolean documentExists(String docName){
-        for (TxtDocument document: documentList) {
-            if (document.getTitle().equals(docName)){
-                return false; }
-        }
-        return true;
+            for (TxtDocument document : documentList) {
+                if (document.getTitle().equals(docName)) {
+                    return false;
+                }
+            }
+            return true;
     }
 
     public void chooseTitleToPrint() {
@@ -168,13 +179,23 @@ public class DocumentLibrary {
     public static String getTextContent() {
         return textContent;
     }
-    public String getTextContent(String title) {
+    public String[] getTextContent(String title) {
         for (TxtDocument text:documentList) {
             if (text.getTitle().equals(title)) {
-            return text.getTextContent();
-             }
+            return createStringArray(text.getTextContent()); }
         }
         return null;
+    }
+
+    private String[] createStringArray(String textContent){
+        InputReader reader = new InputReader();
+        reader.setSc(new Scanner(textContent));
+        ArrayList<String> tempList = new ArrayList();
+        while (reader.getSc().hasNext()){
+            tempList.add(reader.getSc().next());
+        }
+        reader.setSc(new Scanner(System.in));
+        return tempList.toArray(new String[0]);
     }
 
     public static void setTextContent(String textContent) {

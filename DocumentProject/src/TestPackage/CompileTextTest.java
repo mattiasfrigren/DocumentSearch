@@ -13,5 +13,6 @@ class CompileTextTest {
         CompileText text = new CompileText();
         int [] testArr = text.compileStringArray(test);
         assertTrue(testArr.length == test.length());
+        assertArrayEquals(new int[]{0,0,0,1,0,0,0,0,0,0,0}, testArr);
     }
 }
