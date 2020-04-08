@@ -1,40 +1,51 @@
 package documentProject;
 
 import java.io.IOException;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+
+//TODO create singelton and add Exception class
 
 public class Hub {
-    public static void displayHub() {
+    private static Hub hub;
+    private static InputReader reader = new InputReader();
+    private Submenus submenus = new Submenus();
+    private Hub(){}
+
+    public void displayHub() throws IOException {
         int input = 0;
-        while (input !=4) {
-            Scanner sc = new Scanner(System.in);
+        while (input != 4) {
             printMenu();
-            try{
-            input = sc.nextInt();
-            }catch (InputMismatchException exception){
-                System.out.println("That's not a number. Please try again.");
-                continue;
-            }
+            input = reader.getInt();
             switch (input) {
-                case 1:
-                    Submenus.showHandleDocumentMenu();
+                case -1:
                     break;
-                    case 2:
-                    Submenus.searchMenu();
+                case 1:
+                    submenus.showHandleDocumentMenu();
+                    break;
+                case 2:
+                    submenus.searchMenu();
                     break;
                 case 3:
-                    Submenus.sortMenu();
+                    submenus.sortMenu();
                     break;
                 case 4:
                     System.out.println("Goodbye");
+                    System.exit(0);
                     break;
-                default:
+                    default:
                     System.out.println("Its not an alternative in the menu, please try again.");
             }
+
         }
     }
-    private static void printMenu() {
-        System.out.println("Main menu\n[1] Document menu\n[2] Search menu\n[3] Sort menu\n[4] Exit system.");
-    }
+        private void printMenu () {
+            System.out.println("Main menu\n[1] Document menu\n[2] Search menu\n[3] Sort menu\n[4] Exit system.");
+        }
+
+        public static Hub getHub () {
+            if (hub == null) {
+                hub = new Hub();
+            }
+            return hub;
+        }
+
 }

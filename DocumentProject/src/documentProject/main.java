@@ -1,11 +1,31 @@
 package documentProject;
 
+// import Controller.DocumentController;
+import javafx.application.Application;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 
-public class main {
+public class main  /*extends Application */{
 
     public static void main(String[]args) {
-        DocumentLibrary.getLibrary().readInFilesToList();
-        Hub.displayHub();
+        try {
+            DocumentLibrary.getLibrary().readInFilesToList();
+         //   launch(args);
+           Hub hub = Hub.getHub();
+           hub.displayHub();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+/*
+    @Override
+    public void start(Stage stage) throws Exception {
+        try{
+            DocumentController.getController(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    */
 }
