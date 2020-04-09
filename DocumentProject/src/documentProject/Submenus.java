@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 //TODO add exception class
 public class Submenus {
-    private static InputReader reader = new InputReader();
+    private static InputReader reader = InputReader.getInputReader();
     private KMPSearch search = new KMPSearch();
     public void showHandleDocumentMenu() throws IOException {
         int userInput = 0;
