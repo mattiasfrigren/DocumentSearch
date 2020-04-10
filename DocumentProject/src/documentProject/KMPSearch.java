@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class KMPSearch {
-    private InputReader reader = new InputReader();
+    private InputReader reader = InputReader.getInputReader();
     private DocumentLibrary library = DocumentLibrary.getLibrary();
     public String titleSearch;
     private String maxAppearing = "";

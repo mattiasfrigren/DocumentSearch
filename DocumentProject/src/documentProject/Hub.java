@@ -2,15 +2,20 @@ package documentProject;
 
 import java.io.IOException;
 
-//TODO create singelton and add Exception class
-
+/**
+ * Singleton class for displaying the mainmenu and call the methods.
+ * @author Henrik
+ */
 public class Hub {
     private static Hub hub;
-    private static InputReader reader = new InputReader();
+    private static InputReader reader = InputReader.getInputReader();
     private Submenus submenus = new Submenus();
     private Hub(){}
-
-    public void displayHub() throws IOException {
+    /**
+     * Switching userinputs
+     * @throws IOException if error while reading files
+     */
+    protected void displayHub() throws IOException {
         int input = 0;
         while (input != 4) {
             printMenu();
@@ -31,21 +36,27 @@ public class Hub {
                     System.out.println("Goodbye");
                     System.exit(0);
                     break;
-                    default:
+                default:
                     System.out.println("Its not an alternative in the menu, please try again.");
             }
-
         }
     }
+
+    /**
+     * Printing the menu
+     */
         private void printMenu () {
             System.out.println("Main menu\n[1] Document menu\n[2] Search menu\n[3] Sort menu\n[4] Exit system.");
         }
 
-        public static Hub getHub () {
+    /**
+     * Get the object
+     * @return hub
+     */
+        protected static Hub getHub () {
             if (hub == null) {
                 hub = new Hub();
             }
             return hub;
         }
-
 }

@@ -10,42 +10,59 @@ import java.util.MissingFormatArgumentException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class InputReaderTest {
-
+/**
+ * A testclass for testing the userinputs.
+ * @author Henrik
+ */
+class InputReaderTest {
+    /**
+     * Sets the "inputted number" to a double and checks if an exception is thrown.
+     */
     @Test
     void getIntTestWithDouble() {
-        InputReader testreader = new InputReader();
-        testreader.getIntThrowed = false;
-        testreader.inputtedNumber = 4.3;
+        InputReader testreader = InputReader.getInputReader();
+        testreader.setGetIntThrowed(false);
+        testreader.setInputtedNumber(4.3);
         testreader.getInt();
-        Assertions.assertTrue(testreader.getIntThrowed);
+        Assertions.assertTrue(testreader.getGetIntThrowed());
     }
+    /**
+     * Sets the "inputted number" to a string and checks if an exception is thrown.
+     */
     @Test
     void getIntTestWithString() {
-        InputReader testreader = new InputReader();
-        testreader.getIntThrowed = false;
-        testreader.inputtedNumber = "hej";
+        InputReader testreader = InputReader.getInputReader();
+        testreader.setGetIntThrowed(false);
+        testreader.setInputtedNumber("hej");
         testreader.getInt();
-        Assertions.assertTrue(testreader.getIntThrowed);
+        Assertions.assertTrue(testreader.getGetIntThrowed());
     }
+    /**
+     * Sets the "inputted number" to a legit number and check if the returning value is correct.
+     */
     @Test
     void getIntTestWithInt() {
-        InputReader testreader = new InputReader();
-        testreader.inputtedNumber = 99;
+        InputReader testreader = InputReader.getInputReader();
+        testreader.setInputtedNumber(99);
         Assertions.assertEquals(99,testreader.getInt());
     }
-
+    /**
+     * Sets the "inputted name" to nothing and checks if an exception is thrown.
+     */
     @Test
     void testGetStringWithNoInput() {
-        InputReader testreader = new InputReader();
-        testreader.inputtedName = "";
+        InputReader testreader = InputReader.getInputReader();
+        testreader.setInputtedName("");
         testreader.getString();
-        Assertions.assertTrue(testreader.getStringThrowed);
+        Assertions.assertTrue(testreader.getGetStringThrowed());
     }
+    /**
+     * Sets the "inputted name" to a valid string and checks if the returning value is the same..
+     */
     @Test
     void testGetStringWithAValidString() {
-        InputReader testreader = new InputReader();
-        testreader.inputtedName = "Banan";
+        InputReader testreader = InputReader.getInputReader();
+        testreader.setInputtedName("Banan");
         Assertions.assertEquals("Banan",testreader.getString());
     }
 }

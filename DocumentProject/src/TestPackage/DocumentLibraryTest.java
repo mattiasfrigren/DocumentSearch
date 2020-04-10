@@ -13,7 +13,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class DocumentLibraryTest {
+class DocumentLibraryTest {
 
     @Test
     @Order(2)

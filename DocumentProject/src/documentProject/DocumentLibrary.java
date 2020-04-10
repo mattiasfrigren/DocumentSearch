@@ -15,7 +15,7 @@ import java.util.Scanner;
  * @author 91matfri
  */
 public class DocumentLibrary {
-    private static InputReader reader = new InputReader();
+    private static InputReader reader = InputReader.getInputReader();
     private static DocumentLibrary library;
     private static List<TxtDocument> documentList = new ArrayList<>();
     private static String title ="";
@@ -33,16 +33,16 @@ public class DocumentLibrary {
         textContent = "";
         System.out.println("Please name your document: ");
         while (title.equals("")) {
-           // title = reader.getString();
-            title = "SystemTestTitle";
+            title = reader.getString();
+          //  title = "SystemTestTitle";
         }
         System.out.println("write what you want to the document");
         while (textContent.equals("")) {
-            //textContent = reader.getString();
-            textContent = "SystemTest that will make sure to be executed. we will be able to sort and search in this document.";
+            textContent = reader.getString();
+          //  textContent = "SystemTest that will make sure to be executed. we will be able to sort and search in this document.";
         }
     }
-//test
+
     public void saveToTxtFile() throws IOException {
         File txtFile = new File(DifferentLocalStoragePaths.docPath+"\\DocumentProject\\src\\documentPackage\\"+title+".txt");
         if (txtFile.createNewFile()){
@@ -188,7 +188,7 @@ public class DocumentLibrary {
     }
 
     private String[] createStringArray(String textContent){
-        InputReader reader = new InputReader();
+        InputReader reader = InputReader.getInputReader();
         reader.setSc(new Scanner(textContent));
         ArrayList<String> tempList = new ArrayList();
         while (reader.getSc().hasNext()){
