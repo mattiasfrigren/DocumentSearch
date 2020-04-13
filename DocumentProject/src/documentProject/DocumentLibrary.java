@@ -29,7 +29,7 @@ public class DocumentLibrary {
         return library;
     }
 
-//test
+
     public void saveToTxtFile() throws IOException {
         File txtFile = new File(docPath+"\\DocumentProject\\src\\documentPackage\\"+title+".txt");
         String path = docPath+"\\DocumentProject\\src\\documentPackage";
@@ -39,7 +39,7 @@ public class DocumentLibrary {
             writer.close();
             System.out.println("\""+title+"\" was created.");
             savedDoc =true; }
-        else System.out.println("file already exists or invalid name for document");
+        else System.out.println("File already exists or invalid documenttitle.");
     }
 
     public void updateFile(String title,String textContent) throws IOException {
@@ -87,7 +87,7 @@ public class DocumentLibrary {
         if (documentList.size()>0){
             for (TxtDocument txtContent : documentList) {
                 if (txtContent.getTitle().equals(title)){
-                System.out.println(txtContent.getTextContent());
+                System.out.println("The text in this document is: "+txtContent.getTextContent());
                 titleFound =true;
                 break; }
             }
@@ -153,14 +153,14 @@ public class DocumentLibrary {
 
     public void readInTextcontent(){
         textContent = "";
-        System.out.println("Write into the document: ");
+        System.out.println("Please enter the text you want in the document.");
         while (textContent.equals("")) {
             textContent=reader.getString(); }
     }
 
     public void readInTitle(){
         title = "";
-        System.out.println("Please enter the title you want to print:");
+        System.out.println("Please enter the title of the document.");
         while (title.equals("")) {
             title=reader.getString(); }
     }

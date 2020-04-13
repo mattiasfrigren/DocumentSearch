@@ -10,18 +10,19 @@ public class Hub {
     private static Hub hub;
     private static InputReader reader = InputReader.getInputReader();
     private Submenus submenus = new Submenus();
+    private int input = 0;
     private Hub(){}
     /**
      * Switching userinputs
      * @throws IOException if error while reading files
      */
     protected void displayHub() throws IOException {
-        int input = 0;
         while (input != 4) {
             printMenu();
             input = reader.getInt();
             switch (input) {
-                case -1:
+                case 0:
+                    System.out.println("You have to input a legal number.");
                     break;
                 case 1:
                     submenus.showHandleDocumentMenu();
@@ -41,14 +42,19 @@ public class Hub {
             }
         }
     }
-
     /**
      * Printing the menu
      */
         private void printMenu () {
             System.out.println("Main menu\n[1] Document menu\n[2] Search menu\n[3] Sort menu\n[4] Exit system.");
         }
-
+        /**
+     * Set the input to 0 to reset the userinput after som exceptionhandling,
+     * @param input userinput
+     */
+    public void setInput(int input) {
+        this.input = input;
+    }
     /**
      * Get the object
      * @return hub

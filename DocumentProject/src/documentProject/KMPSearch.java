@@ -39,17 +39,18 @@ public class KMPSearch {
             String searchWord = enterSearchWord();
             int[] result = searchKMP(textContent, searchWord);
             if (result.length != 0) {
-                System.out.print("The Size of the Text is: "+textContent.length()+" Chars.\nOrdet \"" + searchWord + "\" förekommer vid index:");
+                System.out.print("The length of the document \""+library.getTitle()+ "\" is "+textContent.length()+
+                        " chars.\nThe word \"" + searchWord + "\" appear in index(es):");
                 for (int index : result) {
                     System.out.print(" " + index + ",");
                 }
                 System.out.println("");
             } else {
-                System.out.println("Ordet förekommer inte i dokumentet.");
+                System.out.println("The word does not appear in the document \""+library.getTitle()+"\".");
             }
         }
         else {
-            System.out.println("Titeln finns inte i biblioteket.");
+            System.out.println("The title does not exists in the library.");
         }
     }
     //The method only uses other methods.
@@ -58,10 +59,10 @@ public class KMPSearch {
         String textContent = library.getTextContent(library.getTitle());
         if (textContent!=null && textContent.length()>0) {
             String searchWord = enterSearchWord();
-            System.out.println("Ordet \"" + searchWord + "\" förekommer " + getTimes(textContent, searchWord) + " gånger i dokumentet.");
+            System.out.println("The word \"" + searchWord + "\" appears " + getTimes(textContent, searchWord) + " times in the document.");
         }
         else {
-            System.out.println("Titeln finns inte i biblioteket.");
+            System.out.println("The title does not exists in the library.");
         }
     }
     public int getTimes(String content,String word){
@@ -69,10 +70,10 @@ public class KMPSearch {
         if (result.length!=0){firstIndex = result[0];}
         return result.length;
     }
-    //Only uses readermethod
+
     public String enterSearchWord() {
         String searchWord = "";
-        System.out.println("Write into the document: ");
+        System.out.println("Please enter searchword. ");
         while (searchWord.equals("")) {
             searchWord=reader.getString(); }
 
@@ -85,10 +86,10 @@ public class KMPSearch {
         String wordToSearch = enterSearchWord();
         int max = getMax(wordToSearch);
         if (max>0) {
-            System.out.println("The word " + wordToSearch + " appear most in the document(s) \"" + maxAppearing + "\" (" + max + " times).");
+            System.out.println("The word \"" + wordToSearch + "\" appear most ("+max+") times in the document(s): \"" + maxAppearing + ".");
         }
         else {
-        System.out.println("The word " + wordToSearch + " does not appear in any document.");
+        System.out.println("The word \"" + wordToSearch + "\" does not appear in any document.");
         }
     }
     public int getMax(String wordToSearch) {
@@ -98,10 +99,10 @@ public class KMPSearch {
             for (int i = 0; i < library.getDocumentList().size(); i++) {
                 current = getTimes(library.getDocumentList().get(i).getTextContent(), wordToSearch);
                 if (current > max) {
-                    maxAppearing = library.getDocumentList().get(i).getTitle() + ".txt"+ " first index at: "+firstIndex;
+                    maxAppearing = library.getDocumentList().get(i).getTitle() + ".txt\""+ " (The first index is at "+firstIndex+")";
                     max = current;
                 } else if (current == max) {
-                    maxAppearing += ", " + library.getDocumentList().get(i).getTitle() + ".txt"+ " first index at: "+firstIndex;
+                    maxAppearing += ", " + library.getDocumentList().get(i).getTitle() + ".txt\""+ " (The first index is at "+firstIndex+")";
                 }
             }
         }
@@ -116,7 +117,6 @@ public class KMPSearch {
     }
 
     public void searchForTitle(){
-        System.out.println("search for a title: ");
         maxAppearing ="";
         // titleSearch = "test";  <---- for testing
         String titleSearch = enterSearchWord();
@@ -126,7 +126,12 @@ public class KMPSearch {
                 maxAppearing +=doc.getTitle()+".txt | ";
             }
         }
-        System.out.println(maxAppearing + " these document came up on the search for: " + titleSearch);
+        if(!maxAppearing.equals("")) {
+            System.out.println(titleSearch + " appears in the documents: " + maxAppearing);
+        }
+        else {
+            System.out.println("There is no titles with that word.");
+        }
     }
 
     public String getMaxAppearing() {
