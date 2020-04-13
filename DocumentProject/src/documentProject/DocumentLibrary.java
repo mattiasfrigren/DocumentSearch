@@ -22,6 +22,7 @@ public class DocumentLibrary {
     private static String textContent = "";
     private static String docPath = DifferentLocalStoragePaths.getDocPath();
     private static int updateIndex;
+    private static boolean savedDoc =false;
     public static DocumentLibrary getLibrary(){
         if (library ==null){
             library = new DocumentLibrary(); }
@@ -31,12 +32,14 @@ public class DocumentLibrary {
 //test
     public void saveToTxtFile() throws IOException {
         File txtFile = new File(docPath+"\\DocumentProject\\src\\documentPackage\\"+title+".txt");
-        if (txtFile.createNewFile()){
+        String path = docPath+"\\DocumentProject\\src\\documentPackage";
+        if (txtFile.getParent().equals(path)&&txtFile.createNewFile()&&txtFile.canExecute()){
             FileWriter writer = new FileWriter(txtFile);
             writer.write(textContent);
             writer.close();
-            System.out.println("\""+title+"\" was created.");}
-        else System.out.println("file already exists");
+            System.out.println("\""+title+"\" was created.");
+            savedDoc =true; }
+        else System.out.println("file already exists or invalid name for document");
     }
 
     public void updateFile(String title,String textContent) throws IOException {
@@ -55,6 +58,7 @@ public class DocumentLibrary {
         File[] fileArray = getAllFiles.listFiles();
         for (File txtfile: fileArray) {
             if (txtfile.isFile()&&txtfile.canExecute()&&txtfile.getName().endsWith(".txt")){
+                savedDoc = true;
                 addToList(new TxtDocument(cutString(txtfile.getName()),Files.readString(Paths.get(txtfile.getPath()), StandardCharsets.ISO_8859_1)));
             }
         }
@@ -121,8 +125,9 @@ public class DocumentLibrary {
     }
 
     public void addToList(TxtDocument document){
-        if (documentExists(document.getTitle())){
-        documentList.add(document);}
+        if (documentExists(document.getTitle())&&savedDoc==true){
+        documentList.add(document);
+        savedDoc =false; }
     }
     public boolean documentExists(String docName){
         for (int i = 0; i <documentList.size() ; i++) {
@@ -145,6 +150,7 @@ public class DocumentLibrary {
     public static String getTitle() {
         return title;
     }
+
     public void readInTextcontent(){
         textContent = "";
         System.out.println("Write into the document: ");
@@ -166,15 +172,15 @@ public class DocumentLibrary {
     public static String getTextContent() {
         return textContent;
     }
-    public String[] getTextContent(String title) {
+    public String getTextContent(String title) {
         for (TxtDocument text:documentList) {
             if (text.getTitle().equals(title)) {
-            return createStringArray(text.getTextContent()); }
+            return text.getTextContent(); }
         }
         return null;
     }
 
-    private String[] createStringArray(String textContent){
+    public String[] createStringArray(String textContent){
         reader.setSc(new Scanner(textContent));
         ArrayList<String> tempList = new ArrayList();
         while (reader.getSc().hasNext()){

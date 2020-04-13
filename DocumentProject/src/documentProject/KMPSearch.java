@@ -8,7 +8,7 @@ public class KMPSearch {
     private DocumentLibrary library = DocumentLibrary.getLibrary();
     public String titleSearch;
     private String maxAppearing = "";
-
+    private static int firstIndex;
     public int[] searchKMP(String textContent, String searchWord){
         CompileText compile = new CompileText();
         int[] compiledArr = compile.compileStringArray(searchWord);
@@ -33,8 +33,9 @@ public class KMPSearch {
     }
     //The method only use other methods so no test is needed
     public void getIndexes(){
-        String textContent = getTextContet(enterTitle());
-        if (!textContent.equals("")) {
+        library.readInTitle();
+        String textContent = library.getTextContent(library.getTitle());
+        if (textContent!=null && textContent.length()>0) {
             String searchWord = enterSearchWord();
             int[] result = searchKMP(textContent, searchWord);
             if (result.length != 0) {
@@ -53,8 +54,9 @@ public class KMPSearch {
     }
     //The method only uses other methods.
     public void countWords(){
-        String textContent = getTextContet(enterTitle());
-        if (!textContent.equals("")) {
+        library.readInTitle();
+        String textContent = library.getTextContent(library.getTitle());
+        if (textContent!=null && textContent.length()>0) {
             String searchWord = enterSearchWord();
             System.out.println("Ordet \"" + searchWord + "\" förekommer " + getTimes(textContent, searchWord) + " gånger i dokumentet.");
         }
@@ -64,6 +66,7 @@ public class KMPSearch {
     }
     public int getTimes(String content,String word){
         int[] result = searchKMP(content.toLowerCase(),word.toLowerCase());
+        if (result.length!=0){firstIndex = result[0];}
         return result.length;
     }
     //Only uses readermethod
@@ -72,7 +75,7 @@ public class KMPSearch {
         return reader.getString().toLowerCase();
     }
     //Hard to test beacuse you have to create documents.
-    //TODO Enable multiwriter if two documents are equal.
+
     public void compareDocuments() {
         maxAppearing = "";
         String wordToSearch = enterSearchWord();
@@ -87,30 +90,20 @@ public class KMPSearch {
     public int getMax(String wordToSearch) {
         int max = 0;
         int current;
-        for (int i = 0; i<library.getDocumentList().size();i++) {
-            current= getTimes(getTextContet(library.getDocumentList().get(i).getTitle()),wordToSearch);
-            if (current>max) {
-                maxAppearing = library.getDocumentList().get(i).getTitle()+".txt";
-                max = current; }
-            else if (current==max) {
-                maxAppearing +=", " +library.getDocumentList().get(i).getTitle()+".txt"; }
+        if (library.getDocumentList().size()!=0) {
+            for (int i = 0; i < library.getDocumentList().size(); i++) {
+                current = getTimes(library.getDocumentList().get(i).getTextContent(), wordToSearch);
+                if (current > max) {
+                    maxAppearing = library.getDocumentList().get(i).getTitle() + ".txt"+ " first index at: "+firstIndex;
+                    max = current;
+                } else if (current == max) {
+                    maxAppearing += ", " + library.getDocumentList().get(i).getTitle() + ".txt"+ " first index at: "+firstIndex;
+                }
             }
+        }
         return max;
     }
 
-    public String enterTitle() {
-        System.out.println("please give me the title");
-        return reader.getString().toLowerCase();
-    }
-    //Cant test this because of some reason I cant understand
-    public String getTextContet(String title){
-        for (TxtDocument doc:library.getDocumentList()) {
-            if (doc.getTitle().equals(title)){
-                return doc.getTextContent();
-            }
-        }
-        return "";
-    }
     public int[] convertListToArray(List<Integer> result){
         int[] sendBackResult = new int[result.size()];
         for (int i = 0; i <result.size() ; i++) {
@@ -120,11 +113,13 @@ public class KMPSearch {
 
     public void searchForTitle(){
         System.out.println("search for a title: ");
-        titleSearch = "test";
+        maxAppearing ="";
+        // titleSearch = "test";  <---- for testing
+        String titleSearch = enterSearchWord();
         for (TxtDocument doc:library.getDocumentList()) {
            int[] titleArray = searchKMP(doc.getTitle().toLowerCase(),titleSearch);
             if (titleArray.length!=0){
-                maxAppearing +=doc.getTitle()+".txt ";
+                maxAppearing +=doc.getTitle()+".txt | ";
             }
         }
         System.out.println(maxAppearing + " these document came up on the search for: " + titleSearch);
