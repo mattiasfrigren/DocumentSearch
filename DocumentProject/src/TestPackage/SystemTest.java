@@ -157,7 +157,8 @@ class SystemTest {
 
     @Test
     void getTextContetTest() throws IOException {
-        assertEquals("SystemTest that will make sure to be executed. we will be able to sort and search in this document.",kMPSearch.getTextContet("SystemTestTitle"));
+        assertEquals("SystemTest that will make sure to be executed. we will be able to sort and search in this document.",
+                DocumentLibrary.getLibrary().getTextContent(DocumentLibrary.getLibrary().getTitle()));
     }
 
     @Test

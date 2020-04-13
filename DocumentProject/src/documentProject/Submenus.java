@@ -91,7 +91,8 @@ public class Submenus {
                     System.out.println("Enter txt file name");
                     String filename = InputReader.getString();
 
-                        String[] words = DocumentLibrary.getLibrary().getTextContent(filename);
+                        String wordsString = DocumentLibrary.getLibrary().getTextContent(filename);
+                        String[] words = DocumentLibrary.getLibrary().createStringArray(wordsString);
                         //words = removeDuplicates(words);
                         quickSort(words);
                         System.out.println("Words in " + filename + ":");
@@ -106,7 +107,6 @@ public class Submenus {
                     }
                     System.out.println();
                         System.out.println();
-
                     break;
 
               /*  case 3:

@@ -54,7 +54,7 @@ class KMPSearchTest {
         DocumentLibrary.getLibrary().readInFilesToList();
         KMPSearch kMPSearch = new KMPSearch();
         assertEquals("SystemTest that will make sure to be executed. we will be able to sort and search in this document."
-        ,kMPSearch.getTextContet("SystemTestTitle"));
+        ,DocumentLibrary.getLibrary().getTextContent(DocumentLibrary.getLibrary().getTitle()));
     }
 
     /**
