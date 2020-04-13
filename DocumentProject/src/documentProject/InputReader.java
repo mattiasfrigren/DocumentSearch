@@ -15,7 +15,7 @@ public class InputReader {
     public static int getInt() {
         try {
             /* outcomment scannerinput to test the function*/
-            //inputtedNumber = sc.nextInt();
+            inputtedNumber = sc.nextInt();
             if (!inputtedNumber.getClass().getSimpleName().equals("Integer")) {
                 getIntThrowed = true;
                 throw new InputMismatchException();
@@ -37,7 +37,7 @@ public class InputReader {
     public static String getString() {
         sc = new Scanner(System.in);
       /* outcomment scannerinput to test the function*/
-       // inputtedName =sc.nextLine();
+        inputtedName =sc.nextLine();
         try {
             if (inputtedName.equals("")) {
                 getStringThrowed = true;
