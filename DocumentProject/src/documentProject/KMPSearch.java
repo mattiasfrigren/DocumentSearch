@@ -71,8 +71,12 @@ public class KMPSearch {
     }
     //Only uses readermethod
     public String enterSearchWord() {
-        System.out.println("give me a search word please");
-        return reader.getString().toLowerCase();
+        String searchWord = "";
+        System.out.println("Write into the document: ");
+        while (searchWord.equals("")) {
+            searchWord=reader.getString(); }
+
+        return searchWord.toLowerCase();
     }
     //Hard to test beacuse you have to create documents.
 
