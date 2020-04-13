@@ -18,4 +18,8 @@ public class DifferentLocalStoragePaths {
     }
 }
 
-
+/**
+ * If we want to create a folder at users desktop to immediately set a standard folder
+ * new File(DifferentLocalStoragePaths.henriksPath).mkdir();
+ * //public static String henriksPath = System.getProperty("user.home")+"\\desktop\\TextFilesFolder\\";
+ */

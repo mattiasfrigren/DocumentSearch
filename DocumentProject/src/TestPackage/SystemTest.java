@@ -11,10 +11,13 @@ import java.util.Comparator;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * A class creating all the objects needed in the systemtest and runs all unittests.
+ */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class SystemTest {
+class SystemTest {
     DocumentLibrary testLibrary = DocumentLibrary.getLibrary();
-    InputReader testReader = new InputReader();
+    InputReader testReader = InputReader.getInputReader();
     KMPSearch kMPSearch = new KMPSearch();
      String docPath = DifferentLocalStoragePaths.getDocPath();
     @Test
@@ -101,33 +104,33 @@ public class SystemTest {
 
     @Test
     void getIntTestWithDouble() {
-        testReader.getIntThrowed = false;
-        testReader.inputtedNumber = 4.3;
+        testReader.setGetIntThrowed(false);
+        testReader.setInputtedNumber(4.3);
         testReader.getInt();
-        Assertions.assertTrue(testReader.getIntThrowed);
+        Assertions.assertTrue(testReader.getGetStringThrowed());
     }
     @Test
     void getIntTestWithString() {
-        testReader.getIntThrowed = false;
-        testReader.inputtedNumber = "hej";
+        testReader.setGetIntThrowed(false);
+        testReader.setInputtedNumber("hej");
         testReader.getInt();
-        Assertions.assertTrue(testReader.getIntThrowed);
+        Assertions.assertTrue(testReader.getGetIntThrowed());
     }
     @Test
     void getIntTestWithInt() {
-        testReader.inputtedNumber = 99;
+        testReader.setInputtedNumber(99);
         Assertions.assertEquals(99,testReader.getInt());
     }
 
     @Test
     void testGetStringWithNoInput() {
-        testReader.inputtedName = "";
+        testReader.setInputtedName("");
         testReader.getString();
-        Assertions.assertTrue(testReader.getStringThrowed);
+        Assertions.assertTrue(testReader.getGetStringThrowed());
     }
     @Test
     void testGetStringWithAValidString() {
-        testReader.inputtedName = "Banan";
+        testReader.setInputtedName("Banan");
         Assertions.assertEquals("Banan",testReader.getString());
     }
 
@@ -158,8 +161,13 @@ public class SystemTest {
     }
 
     @Test
-    void testCompareDocuments() throws IOException {
+    void testGetMaxCompareDocuments() throws IOException {
         assertEquals(7,kMPSearch.getMax("s"));
+    }
+
+    @Test
+    void testTitleCompareDocuments() throws IOException {
+        kMPSearch.getMax("s");
         assertTrue(kMPSearch.getMaxAppearing().equals("SystemTestTitle.txt"));
     }
 
@@ -167,7 +175,7 @@ public class SystemTest {
     void testSearchTitle() throws IOException {
         kMPSearch.titleSearch = "test";
         kMPSearch.searchForTitle();
-        assertEquals("SystemTestTitle.txt testtesttest.txt ",kMPSearch.getMaxAppearing());
+        assertEquals("SystemTestTitle.txt ",kMPSearch.getMaxAppearing());
     }
 
 
