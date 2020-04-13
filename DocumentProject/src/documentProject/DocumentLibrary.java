@@ -20,31 +20,17 @@ public class DocumentLibrary {
     private static List<TxtDocument> documentList = new ArrayList<>();
     private static String title ="";
     private static String textContent = "";
-
-
+    private static String docPath = DifferentLocalStoragePaths.getDocPath();
+    private static int updateIndex;
     public static DocumentLibrary getLibrary(){
         if (library ==null){
             library = new DocumentLibrary(); }
         return library;
     }
 
-    public void createTxtDocument(){
-        title = "";
-        textContent = "";
-        System.out.println("Please name your document: ");
-        while (title.equals("")) {
-            title = reader.getString();
-          //  title = "SystemTestTitle";
-        }
-        System.out.println("write what you want to the document");
-        while (textContent.equals("")) {
-            textContent = reader.getString();
-          //  textContent = "SystemTest that will make sure to be executed. we will be able to sort and search in this document.";
-        }
-    }
-
+//test
     public void saveToTxtFile() throws IOException {
-        File txtFile = new File(DifferentLocalStoragePaths.docPath+"\\DocumentProject\\src\\documentPackage\\"+title+".txt");
+        File txtFile = new File(docPath+"\\DocumentProject\\src\\documentPackage\\"+title+".txt");
         if (txtFile.createNewFile()){
             FileWriter writer = new FileWriter(txtFile);
             writer.write(textContent);
@@ -54,114 +40,102 @@ public class DocumentLibrary {
     }
 
     public void updateFile(String title,String textContent) throws IOException {
-        File txtFile = new File(DifferentLocalStoragePaths.docPath+"\\DocumentProject\\src\\documentPackage\\"+title+".txt");
+        File txtFile = new File(docPath+"\\DocumentProject\\src\\documentPackage\\"+title+".txt");
         FileWriter writer = new FileWriter(txtFile);
         writer.append(textContent);
         writer.close();
     }
+    public void updateTextContent(String title, String textContent){
+        if (!documentExists(title))
+        documentList.get(updateIndex).setTextContent(textContent);
+    }
 
     public void readInFilesToList() throws IOException {
-        File getAllFiles = new File(DifferentLocalStoragePaths.docPath+"\\DocumentProject\\src\\documentPackage");
+        File getAllFiles = new File(docPath+"\\DocumentProject\\src\\documentPackage");
         File[] fileArray = getAllFiles.listFiles();
         for (File txtfile: fileArray) {
-            if (txtfile.isFile()){
+            if (txtfile.isFile()&&txtfile.canExecute()&&txtfile.getName().endsWith(".txt")){
                 addToList(new TxtDocument(cutString(txtfile.getName()),Files.readString(Paths.get(txtfile.getPath()), StandardCharsets.ISO_8859_1)));
             }
         }
     }
 
     public void createNewTxtFile() throws IOException {
-        createTxtDocument();
+        readInTitle();
+        readInTextcontent();
         saveToTxtFile();
         addToList(new TxtDocument(title,textContent));
     }
-
+    //reason for this method to return string is if we are going to use a View.
     public String printAllTitles(){
         String viewTitle="";
-        if (documentList.size()>0){
+        if (documentList.size()!=0){
             for (TxtDocument title : documentList) {
             System.out.println(title.getTitle());
-            viewTitle = title.getTitle()+ "\n" +viewTitle;
-            }
+            viewTitle = title.getTitle()+ "\n" +viewTitle; }
         }
-        else {System.out.println("The library is empty.");
-        }
+        else {System.out.println("The library is empty."); }
         return viewTitle;
     }
-    public void printTextContent(String title){
+
+    public void printTextContent(){
         boolean titleFound = false;
         if (documentList.size()>0){
             for (TxtDocument txtContent : documentList) {
                 if (txtContent.getTitle().equals(title)){
                 System.out.println(txtContent.getTextContent());
-                titleFound = true;
-                }
+                titleFound =true;
+                break; }
             }
             if (!titleFound) {
-                System.out.println("There is no \""+title+"\" in the library.");
-            }
+                System.out.println("There is no \""+title+"\" in the library."); }
         }
-        else {System.out.println("The library is empty.");
-        }
+        else {System.out.println("The library is empty."); }
     }
 
     public void deleteTxtFileFromLocalAndList() throws IOException {
-        String deleteTitle = "";
-        boolean deleteSuccess = false;
-        System.out.println("Please enter the title you want to remove:");
-        while (deleteTitle.equals("")) {
-            deleteTitle = reader.getString();
-            for (TxtDocument elements : documentList) {
-                if (elements.getTitle().equals(deleteTitle)) {
-                    deleteTxtDocument(elements);
-                    deleteTxtFile(deleteTitle);
-                    System.out.println("\"" + deleteTitle + "\" was deleted.");
-                    deleteSuccess = true;
-                    break;
-                }
-            }
-        }
-        if (!deleteSuccess) {
-            System.out.println("There is no title \"" + deleteTitle + "\" and no file was deleted.");
-        }
+            title = "";
+            readInTitle();
+            if (!documentExists(title)) {
+                deleteTxtDocument();
+                deleteTxtFile();
+                System.out.println("\"" + title + "\" was deleted."); }
+        else{
+            System.out.println("There is no title \"" + title + "\" and no file was deleted."); }
     }
 
     public String cutString(String pathName){
         return (String) pathName.subSequence(0,pathName.length()-4);
     }
 
-    public void deleteTxtDocument(TxtDocument txtDocument){
-        documentList.remove(txtDocument);
+    public void deleteTxtDocument(){
+        documentList.remove(documentList.get(updateIndex));
     }
 
-    public void deleteTxtFile(String txtFile){
-        File deleteFile = new File(DifferentLocalStoragePaths.docPath+
-                "\\DocumentProject\\src\\documentPackage\\"+txtFile+".txt");
+    public void deleteTxtFile(){
+        File deleteFile = new File(docPath+
+                "\\DocumentProject\\src\\documentPackage\\"+title+".txt");
         if (deleteFile.isFile()){
         deleteFile.delete();
         }
     }
 
     public void addToList(TxtDocument document){
-        if (!documentList.contains(document.getTitle()) && documentExists(document.getTitle())){
+        if (documentExists(document.getTitle())){
         documentList.add(document);}
     }
     public boolean documentExists(String docName){
-            for (TxtDocument document : documentList) {
-                if (document.getTitle().equals(docName)) {
-                    return false;
-                }
-            }
+        for (int i = 0; i <documentList.size() ; i++) {
+            if (documentList.get(i).getTitle().equals(docName)) {
+                updateIndex =i;
+                return false; }
+        }
             return true;
     }
 
     public void chooseTitleToPrint() {
-        String title = "";
-        System.out.println("Please enter the title you want to print:");
-        while (title.equals("")) {
-            title=reader.getString();
-        }
-        printTextContent(title);
+        readInTitle();
+        printTextContent();
     }
 
     public List<TxtDocument> getDocumentList() {
@@ -170,6 +144,19 @@ public class DocumentLibrary {
 
     public static String getTitle() {
         return title;
+    }
+    public void readInTextcontent(){
+        textContent = "";
+        System.out.println("Write into the document: ");
+        while (textContent.equals("")) {
+            textContent=reader.getString(); }
+    }
+
+    public void readInTitle(){
+        title = "";
+        System.out.println("Please enter the title you want to print:");
+        while (title.equals("")) {
+            title=reader.getString(); }
     }
 
     public static void setTitle(String title) {
@@ -188,7 +175,6 @@ public class DocumentLibrary {
     }
 
     private String[] createStringArray(String textContent){
-        InputReader reader = InputReader.getInputReader();
         reader.setSc(new Scanner(textContent));
         ArrayList<String> tempList = new ArrayList();
         while (reader.getSc().hasNext()){

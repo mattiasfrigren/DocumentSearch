@@ -19,12 +19,12 @@ class SystemTest {
     DocumentLibrary testLibrary = DocumentLibrary.getLibrary();
     InputReader testReader = InputReader.getInputReader();
     KMPSearch kMPSearch = new KMPSearch();
-
+     String docPath = DifferentLocalStoragePaths.getDocPath();
     @Test
     @Order(2)
     void readAllFilesTest() throws IOException {
         int i=0;
-        File allTestFIles = new File(DifferentLocalStoragePaths.docPath+"\\DocumentProject\\src\\documentPackage");
+        File allTestFIles = new File(docPath+"\\DocumentProject\\src\\documentPackage");
         File[] fileArr = allTestFIles.listFiles();
         testLibrary.readInFilesToList();
         assertTrue(fileArr.length == testLibrary.getDocumentList().size());
@@ -54,7 +54,7 @@ class SystemTest {
         testLibrary.saveToTxtFile();
         File testfile = new File("");
         assertFalse(testfile.exists());
-        testfile= new File(DifferentLocalStoragePaths.docPath+"\\" +
+        testfile= new File(docPath+"\\" +
                 "DocumentProject\\src\\documentPackage\\"+testLibrary.getTitle()+".txt");
         assertFalse(testfile.createNewFile());
         assertTrue(testfile.exists());
@@ -65,9 +65,9 @@ class SystemTest {
     @Test
     @Order(5)
     void deleteFileTest() throws IOException {
-        File testFile = new File(DifferentLocalStoragePaths.docPath+"\\DocumentProject\\src\\documentPackage\\testFile.txt");
+        File testFile = new File(docPath+"\\DocumentProject\\src\\documentPackage\\testFile.txt");
         testFile.createNewFile();
-        testLibrary.deleteTxtFile((String) testFile.getName().subSequence(0,testFile.getName().length()-4));
+      //  testLibrary.deleteTxtFile((String) testFile.getName().subSequence(0,testFile.getName().length()-4));
         assertFalse(testFile.exists());
 
     }
@@ -77,7 +77,7 @@ class SystemTest {
         TxtDocument testTxt = new TxtDocument("deleteTest","deleteContent");
         testLibrary.addToList(testTxt);
         assertTrue(testLibrary.getDocumentList().contains(testTxt));
-        testLibrary.deleteTxtDocument(testTxt);
+       // testLibrary.deleteTxtDocument(testTxt);
         assertFalse(testLibrary.getDocumentList().contains(testTxt));
     }
     @Test

@@ -74,7 +74,7 @@ public class Submenus {
             userInput = reader.getInt();
             switch (userInput) {
                 case 1:
-                    String[] titles = new File(DifferentLocalStoragePaths.docPath + "\\out\\production\\DocumentProject\\documentPackage\\")
+                    String[] titles = new File(DifferentLocalStoragePaths.getDocPath() + "\\out\\production\\DocumentProject\\documentPackage\\")
                             .list();
                     quickSort(titles);
                     System.out.println();
@@ -86,15 +86,13 @@ public class Submenus {
                     }
                     System.out.println();
                     System.out.println();
-
                     break;
-
                 case 2:
                     System.out.println("Enter txt file name");
                     String filename = InputReader.getString();
 
                         String[] words = DocumentLibrary.getLibrary().getTextContent(filename);
-                        words = removeDuplicates(words);
+                        //words = removeDuplicates(words);
                         quickSort(words);
                         System.out.println("Words in " + filename + ":");
                         for (String word: words) {
@@ -102,6 +100,7 @@ public class Submenus {
                         }
                     try {
                         DocumentLibrary.getLibrary().updateFile(filename,String.join(" ",words));
+                        DocumentLibrary.getLibrary().updateTextContent(filename,String.join(" ",words));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
