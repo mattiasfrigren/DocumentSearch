@@ -15,7 +15,7 @@ import java.util.Scanner;
  * @author 91matfri
  */
 public class DocumentLibrary {
-    private static InputReader reader = new InputReader();
+    private static InputReader reader = InputReader.getInputReader();
     private static DocumentLibrary library;
     private static List<TxtDocument> documentList = new ArrayList<>();
     private static String title ="";
@@ -46,7 +46,7 @@ public class DocumentLibrary {
         writer.close();
     }
     public void updateTextContent(String title, String textContent){
-        if (documentExists(title))
+        if (!documentExists(title))
         documentList.get(updateIndex).setTextContent(textContent);
     }
 
@@ -175,7 +175,6 @@ public class DocumentLibrary {
     }
 
     private String[] createStringArray(String textContent){
-        InputReader reader = new InputReader();
         reader.setSc(new Scanner(textContent));
         ArrayList<String> tempList = new ArrayList();
         while (reader.getSc().hasNext()){
