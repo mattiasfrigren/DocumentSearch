@@ -170,6 +170,7 @@ public class DocumentLibrary {
     public static String getTextContent() {
         return textContent;
     }
+
     public String getTextContent(String title) {
         for (TxtDocument text:documentList) {
             if (text.getTitle().equals(title)) {
