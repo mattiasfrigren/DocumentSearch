@@ -9,6 +9,7 @@ import java.util.Scanner;
  */
 public class InputReader {
     private static InputReader inputReader;
+    private static Hub hub = Hub.getHub();
     private static Scanner sc = new Scanner(System.in);
     private InputReader(){}
     /**
@@ -20,7 +21,7 @@ public class InputReader {
     private static String inputtedName = "";
     /**
      * Handling integers
-     * @return valid integer or -1
+     * @return valid integer or 0
      */
     public static int getInt() {
         try {
@@ -31,9 +32,8 @@ public class InputReader {
             }
         }
         catch (InputMismatchException | ArithmeticException exception){
-                System.out.println("You have to input a legal number.");
-                sc = new Scanner(System.in);
-            return -1;
+            sc = new Scanner(System.in);
+            return 0;
         }
         return (int) inputtedNumber;
     }
@@ -52,6 +52,7 @@ public class InputReader {
         }
         catch (IllegalArgumentException | InputMismatchException e) {
             System.out.println(e.getMessage());
+            hub.setInput(0);
             sc = new Scanner(System.in);
         }
         return inputtedName;
