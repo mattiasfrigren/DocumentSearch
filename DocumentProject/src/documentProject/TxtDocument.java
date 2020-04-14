@@ -1,5 +1,7 @@
 package documentProject;
 
+import java.io.InputStream;
+
 /**
  * @author 91matfri
  */

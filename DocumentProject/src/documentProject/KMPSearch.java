@@ -69,7 +69,7 @@ public class KMPSearch {
         if (result.length!=0){firstIndex = result[0];}
         return result.length;
     }
-    //Only uses readermethod
+    //Only uses reader method
     public String enterSearchWord() {
         String searchWord = "";
         System.out.println("Write into the document: ");
@@ -78,7 +78,7 @@ public class KMPSearch {
 
         return searchWord.toLowerCase();
     }
-    //Hard to test beacuse you have to create documents.
+    //Hard to test because you have to create documents.
 
     public void compareDocuments() {
         maxAppearing = "";

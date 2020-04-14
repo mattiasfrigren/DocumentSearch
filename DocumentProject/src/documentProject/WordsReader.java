@@ -1,7 +1,8 @@
 package documentProject;
 /**
  * Anara
-*/
+
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -41,7 +42,6 @@ public class WordsReader {
     }
 
 
-
     public String[] readAllFiles(File directory) throws FileNotFoundException {
         ArrayList<String> allWords = new ArrayList<>();
         for (File file : directory.listFiles()){
@@ -52,3 +52,4 @@ public class WordsReader {
     }
 
 }
+ */

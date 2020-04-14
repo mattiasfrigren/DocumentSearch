@@ -1,13 +1,12 @@
 package documentProject;
 
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -190,7 +189,34 @@ public class DocumentLibrary {
         return tempList.toArray(new String[0]);
     }
 
+    /**
+     * quick sorting algorithm
+     * @param words all sorted together
+     */
+    public static void quickSort(String[] words) {
+        //upper case and lower case sorted together
+        Comparator<String> caseInsensitiveStringComparator = (word1, word2) -> word1.compareToIgnoreCase(word2);
+        new QuickSort<String>(caseInsensitiveStringComparator).sort(words);
+    }
+
     public static void setTextContent(String textContent) {
         DocumentLibrary.textContent = textContent;
+    }
+
+
+    // methods from wordsreader class for sorting word documents
+    public String[] readFile(FileInputStream filename) throws FileNotFoundException {
+        FileInputStream stream = new FileInputStream(String.valueOf(filename));
+        return readFile(stream); //stream - API flow
+    }
+    private String[] readFile(InputStream stream) {
+        Scanner scanner = new Scanner(stream);
+        ArrayList<String> words = new ArrayList<>();
+        while (scanner.hasNext()) {
+            String next = scanner.next();
+            words.add(next);
+        }
+        return words.toArray(new String[0]); //the placeholder to the Array to tell what the type of the Array it is
+        //the Object Array we return as a String Array
     }
 }

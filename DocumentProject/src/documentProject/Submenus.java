@@ -76,7 +76,7 @@ public class Submenus {
                 case 1:
                     String[] titles = new File(DifferentLocalStoragePaths.getDocPath() + "\\out\\production\\DocumentProject\\documentPackage\\")
                             .list();
-                    quickSort(titles);
+                    DocumentLibrary.quickSort(titles);
                     System.out.println();
                     //assert titles != null;
                     if (titles != null) { //if we don't need a warning that titles are null. It's a safe way.
@@ -92,9 +92,10 @@ public class Submenus {
                     String filename = InputReader.getString();
 
                         String wordsString = DocumentLibrary.getLibrary().getTextContent(filename);
+
                         String[] words = DocumentLibrary.getLibrary().createStringArray(wordsString);
                         //words = removeDuplicates(words);
-                        quickSort(words);
+                        DocumentLibrary.quickSort(words);
                         System.out.println("Words in " + filename + ":");
                         for (String word: words) {
                             System.out.println(word);
@@ -109,41 +110,12 @@ public class Submenus {
                         System.out.println();
                     break;
 
-              /*  case 3:
-                    try {
-                        File directory = new File(DifferentLocalStoragePaths.docPath + "\\DocumentProject\\documentPackage\\");
-                        String[] words = new WordsReader().readAllFiles(directory);
-                        words = removeDuplicates(words);
-                        quickSort(words);
-                        System.out.println("Words in all files:");
-                        for (String word: words) {
-                            System.out.println(word);
-                        }
-                        System.out.println();
-                        System.out.println();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    break; */
+                case 3:
+                    break;
                 default:
                     System.out.println("Its not an alternative in the menu, please try again.");
                     break;
             }
         }
-    }
-
-    // remove duplicates of words when we print out sorted words
-    private static String[] removeDuplicates(String[] words) {
-        HashSet<String> set = new HashSet<>();
-        for (String word : words) {
-            set.add(word);
-        }
-        return set.toArray(new String[0]);
-    }
-
-    public static void quickSort(String[] words) {
-        //upper case and lower case sorted together
-        Comparator<String> caseInsensitiveStringComparator = (word1, word2) -> word1.compareToIgnoreCase(word2);
-        new QuickSort<String>(caseInsensitiveStringComparator).sort(words);
     }
 }
