@@ -3,12 +3,25 @@ package documentProject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class handling the search
+ * @author Mattias Henrik
+ */
 public class KMPSearch {
     private InputReader reader = InputReader.getInputReader();
     private DocumentLibrary library = DocumentLibrary.getLibrary();
     public String titleSearch;
     private String maxAppearing = "";
     private static int firstIndex;
+
+    /**
+     * This is the main searching method. It is Knuth Morris Pratt algorithm. It calls the compiletextmethod
+     * to get the pattern of the word and then it add the searchinghits into a list. When done it convert the list
+     * into an array.
+     * @param textContent The text that will be determined.
+     * @param searchWord The word to search for.
+     * @return an intarray with the indexes where the searchword appear.
+     */
     public int[] searchKMP(String textContent, String searchWord){
         CompileText compile = new CompileText();
         int[] compiledArr = compile.compileStringArray(searchWord);
@@ -31,7 +44,13 @@ public class KMPSearch {
         }
         return convertListToArray(searchResult);
     }
-    //The method only use other methods so no test is needed
+
+    /**
+     * This method handling when the user wants all the indexes of a word in a specific document. It calls
+     * the "readintitle" method in the "documentlibrary", calls the entersearchword in this class and calls
+     * the main searchmethod "KMPSearch".To easier understand the indexes the method also prints the total
+     * indexes of the document before printing the indexes.
+     */
     public void getIndexes(){
         library.readInTitle();
         String textContent = library.getTextContent(library.getTitle());
@@ -53,7 +72,11 @@ public class KMPSearch {
             System.out.println("The title does not exists in the library.");
         }
     }
-    //The method only uses other methods.
+    /**
+     * This method is used when counting the words for a search in a single document.
+     * It calling the "readintitle" method in the "documentlibrary", calling the "entersearchword" in this class and
+     * calling the "getTimes" and printing the result.
+     */
     public void countWords(){
         library.readInTitle();
         String textContent = library.getTextContent(library.getTitle());
@@ -65,13 +88,24 @@ public class KMPSearch {
             System.out.println("The title does not exists in the library.");
         }
     }
+    /**
+     * This method simply calling the main search method and returning the int. It is used in both searching
+     * for single documents and all the documents. It also changing the variable "firstindex" to where the first hit were.
+     * @param content Documenttext
+     * @param word Searchword
+     * @return How many times appearing.
+     */
     public int getTimes(String content,String word){
         int[] result = searchKMP(content.toLowerCase(),word.toLowerCase());
-        if (result.length!=0){firstIndex = result[0];}
+        if (result.length!=0){
+            firstIndex = result[0];}
         return result.length;
     }
-
-    public String enterSearchWord() {
+    /**
+     * This method handling the userinput when user enter the searchword.
+     * @return valid word
+     */
+    private String enterSearchWord() {
         String searchWord = "";
         System.out.println("Please enter searchword. ");
         while (searchWord.equals("")) {
@@ -79,8 +113,11 @@ public class KMPSearch {
 
         return searchWord.toLowerCase();
     }
-    //Hard to test beacuse you have to create documents.
 
+    /**
+     * This method calls the "entersearchword" method, getting the number from "getmax" and prints the result
+     * which document that contains most searchhits. It can be more than one document.
+     */
     public void compareDocuments() {
         maxAppearing = "";
         String wordToSearch = enterSearchWord();
@@ -92,6 +129,13 @@ public class KMPSearch {
         System.out.println("The word \"" + wordToSearch + "\" does not appear in any document.");
         }
     }
+    /**
+     *This method calling the "gettimes" method with the documents an searchword one by one and bulding the
+     * "maxappearing" string with the right titles and where the first hit were and therefore most releveant if
+     * two titles have the same hits.
+     * @param wordToSearch The searchword.
+     * @return The number of hits.
+     */
     public int getMax(String wordToSearch) {
         int max = 0;
         int current;
@@ -108,14 +152,23 @@ public class KMPSearch {
         }
         return max;
     }
-
+    /**
+     * Method to convert a list into an array. Its easier to add to a list into the main search function but easier and more
+     * efficient to handling the data later with an array.
+     * @param result List with the ints from the search.
+     * @return The intarray back to the searchfunction.
+     */
     public int[] convertListToArray(List<Integer> result){
         int[] sendBackResult = new int[result.size()];
         for (int i = 0; i <result.size() ; i++) {
             sendBackResult[i] = result.get(i); }
         return sendBackResult;
     }
-
+    /**
+     * Method to search for a title. It calls the "entersearchword" and the loop through the documentlist and
+     * instead of calling the searchmethod with the documentcontent the method passes the titles here. Then
+     * it prints the results.
+     */
     public void searchForTitle(){
         maxAppearing ="";
         // titleSearch = "test";  <---- for testing
@@ -123,19 +176,21 @@ public class KMPSearch {
         for (TxtDocument doc:library.getDocumentList()) {
            int[] titleArray = searchKMP(doc.getTitle().toLowerCase(),titleSearch);
             if (titleArray.length!=0){
-                maxAppearing +=doc.getTitle()+".txt | ";
+                maxAppearing +="\""+doc.getTitle()+".txt\" | ";
             }
         }
         if(!maxAppearing.equals("")) {
-            System.out.println(titleSearch + " appears in the documents: " + maxAppearing);
+            System.out.println("\""+titleSearch+"\" appears in the following documents: " + maxAppearing);
         }
         else {
             System.out.println("There is no titles with that word.");
         }
     }
-
+    /**
+     * A getter used to testing.
+     * @return The string with the titles/contents.
+     */
     public String getMaxAppearing() {
         return maxAppearing;
     }
-
 }
