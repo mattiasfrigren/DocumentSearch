@@ -66,7 +66,7 @@ public class Submenus {
             }
         }
     }
-    public void sortMenu() {
+    public static void sortMenu() {
         int userInput = 0;
         while (userInput!=3) {
             System.out.println("What would you like to do?\n[1] Sort titles\n[2] Sort words in a document\n" +
@@ -74,42 +74,11 @@ public class Submenus {
             userInput = reader.getInt();
             switch (userInput) {
                 case 1:
-                    String[] titles = new File(DifferentLocalStoragePaths.getDocPath() + "\\out\\production\\DocumentProject\\documentPackage\\")
-                            .list();
-                    DocumentLibrary.quickSort(titles);
-                    System.out.println();
-                    //assert titles != null;
-                    if (titles != null) { //if we don't need a warning that titles are null. It's a safe way.
-                        for (String word: titles) {
-                            System.out.println(word);
-                        }
-                    }
-                    System.out.println();
-                    System.out.println();
+                    Sorting.sortTitles();
                     break;
                 case 2:
-                    System.out.println("Enter txt file name");
-                    String filename = InputReader.getString();
-
-                        String wordsString = DocumentLibrary.getLibrary().getTextContent(filename);
-
-                        String[] words = DocumentLibrary.getLibrary().createStringArray(wordsString);
-                        //words = removeDuplicates(words);
-                        DocumentLibrary.quickSort(words);
-                        System.out.println("Words in " + filename + ":");
-                        for (String word: words) {
-                            System.out.println(word);
-                        }
-                    try {
-                        DocumentLibrary.getLibrary().updateFile(filename,String.join(" ",words));
-                        DocumentLibrary.getLibrary().updateTextContent(filename,String.join(" ",words));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    System.out.println();
-                        System.out.println();
+                    Sorting.sortText();
                     break;
-
                 case 3:
                     break;
                 default:

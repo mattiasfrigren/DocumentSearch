@@ -1,7 +1,7 @@
 package TestPackage;
 
-import documentProject.DocumentLibrary;
 import documentProject.QuickSort;
+import documentProject.Sorting;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -48,14 +48,14 @@ public class QuickSortTest {
     @Test
     public void Words_can_be_sorted () {
         final String[] array = new String[]{"Anara", "armadillo", "aardvark"};
-        DocumentLibrary.quickSort(array); // method quickSort taken from the Submenu to implement the comparator from there to here and be able to test the String array
+        Sorting.quickSort(array); // method quickSort taken from the Submenu to implement the comparator from there to here and be able to test the String array
         assertArrayEquals(new String[]{"aardvark", "Anara", "armadillo"}, array);
     }
 
     @Test
     public void emptyWordsArrayIdUnchanged() {
         final String[] array = new String[]{};
-        DocumentLibrary.quickSort(array);
+        Sorting.quickSort(array);
         assertArrayEquals(new String[]{}, array);
     }
 
@@ -70,7 +70,7 @@ public class QuickSortTest {
     @Test
     public void givenUnsortedStringArray_whenQuickSort_thenSortedASC() {
         String[] input = {"5", "22", "3", "6", "41", "1"};
-        DocumentLibrary.quickSort(input);
+        Sorting.quickSort(input);
         String [] expected = {"1", "22", "3", "41", "5", "6"};
         assertArrayEquals(input, expected);
     }

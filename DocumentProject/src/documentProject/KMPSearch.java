@@ -79,7 +79,7 @@ public class KMPSearch {
 
         return searchWord.toLowerCase();
     }
-    //Hard to test beacuse you have to create documents.
+    //Hard to test because you have to create documents.
 
     public void compareDocuments() {
         maxAppearing = "";

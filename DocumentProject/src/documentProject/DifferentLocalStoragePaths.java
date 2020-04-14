@@ -10,8 +10,8 @@ package documentProject;
 public class DifferentLocalStoragePaths {
 
     //final private static String docPath = "C:\\Users\\91matfri\\IdeaProjects\\documentgroup";
-    final private static String docPath = "C:\\Users\\78henlar\\desktop\\javaprojekt\\documentgroup";
-    //final private static String docPath = "C:\\Users\\88anazhu\\IdeaProjects\\documentgroup";
+    //final private static String docPath = "C:\\Users\\78henlar\\desktop\\javaprojekt\\documentgroup";
+    final private static String docPath = "C:\\Users\\88anazhu\\IdeaProjects\\documentgroup";
 
     public static String getDocPath() {
         return docPath;
