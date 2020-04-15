@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.Comparator;
 /**
  * methods for sorting texts is places in the Sorting class
- * @author Anara
+ * @author Anara Henrik
  */
 public class Sorting {
     private InputReader reader = InputReader.getInputReader();
@@ -18,15 +18,22 @@ public class Sorting {
         new QuickSort<>(caseInsensitiveStringComparator).sort(words);
     }
     /**
-     * method to sort titles of the text files
+     * method to sort titles and print it to the user.
      */
     public void sortTitles() {
         if (library.getDocumentList().size()>1) {
-        String[] titlesInArray = getTitlesInArray();
-        quickSort(titlesInArray);
-        printSortedArrays(titlesInArray,"librarytitles");
+            String[] titlesInArray = getTitlesInArray();
+            quickSort(titlesInArray);
+            printSortedArrays(titlesInArray,"librarytitles");
+        }
+        else {
+            System.out.println("There is no titles(or only one) to sort in the library.");
         }
     }
+    /**
+     * Method to get all the titles in the documentlist in an array.
+     * @return the Stringarray of titles.
+     */
     private String[] getTitlesInArray() {
         String[] titles = new String[library.getDocumentList().size()];
         for (int i = 0; i<titles.length;i++) {
@@ -35,11 +42,10 @@ public class Sorting {
         return titles;
     }
     /**
-     * method for sorting texts in the files
-     * "while loop" allows to keep entering filenames if file does not exist
-     * either we quit to the sort menu by pressing "q"
+     * Method for sorting words in a document. It calls the sorting algorithm with the words,
+     * print the new order and ask the user if he wants to save the new order.
      */
-    public void sortText() {
+    public void sortText() throws IOException {
         library.readInTitle();
         String title = library.getTitle();
         String content = library.getTextContent(title);
@@ -55,6 +61,12 @@ public class Sorting {
             System.out.println("There is no \""+title+"\" in the library.");
         }
     }
+
+    /**
+     * The method prints both the titles and the words after sorting.
+     * @param parts The words
+     * @param parent If it titles or content
+     */
     private void printSortedArrays(String[] parts, String parent) {
         System.out.println("Sorted " + parent + ":");
         for (String word : parts) {
@@ -62,6 +74,10 @@ public class Sorting {
         }
     }
 
+    /**
+     * This method asks if the user wants to save the new sortingorder.
+     * @return true if the user wants to save it
+     */
     private boolean askForSaveSort() {
         String saveAnswer = "";
         System.out.println("Enter \"save\" to save the document as sorted or enter \"exit\".");
@@ -74,19 +90,13 @@ public class Sorting {
         return false;
     }
     /**
-     * saveSorted method updates the document after choosing it to be saved as sorted by pressing "y"
-     * otherwise it will be kept as an unsorted document
-     * @param filename is the same filename
-     * @param words gets saved as a sorted array
+     * This method calls the savingmethods in the library.
+     * @param title The title which will be overwritten.
+     * @param words The content which will be overwritten.
      */
-    private void saveSorted(String filename, String[] words) {
-        try {
-            library.updateFile(filename, String.join(" ", words));
-            library.updateTextContent(filename, String.join(" ", words));
-            System.out.println("The sorting is saved.");
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void saveSorted(String title, String[] words) throws IOException {
+        library.updateFile(title, String.join(" ", words));
+        library.updateTextContent(title, String.join(" ", words));
+        System.out.println("The sorting is saved.");
     }
 }

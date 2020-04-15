@@ -1,12 +1,21 @@
 package documentProject;
 import java.io.IOException;
 
+/**
+ * Class for the submenus
+ * @author Henrik
+ */
+
 public class Submenus {
     private static InputReader reader = InputReader.getInputReader();
     private Sorting sorting = new Sorting();
     private KMPSearch search = new KMPSearch();
     private DocumentLibrary library = DocumentLibrary.getLibrary();
 
+    /**
+     * Method for the documentoptions and keeps going until the user press [5].
+     * @throws IOException If there is anything wrong with the reading files in case 1 and 2.
+     */
     public void showHandleDocumentMenu() throws IOException {
         int userInput = 0;
         while (userInput!=5) {
@@ -33,6 +42,9 @@ public class Submenus {
             }
         }
     }
+    /**
+     * Method for the searchoptions and keeps going until the user press [5].
+     */
     public void searchMenu() {
         int userInput = 0;
         while (userInput!=5) {
@@ -60,7 +72,10 @@ public class Submenus {
             }
         }
     }
-    public void sortMenu() {
+    /**
+     * Method for the sortoptions and keeps going until the user press [3].
+     */
+    public void sortMenu() throws IOException {
         int userInput = 0;
         while (userInput!=3) {
             System.out.println("What would you like to do?\n[1] Sort titles\n[2] Sort words in a document\n" +
