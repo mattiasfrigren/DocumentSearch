@@ -1,19 +1,11 @@
 package documentProject;
-
-import javax.print.Doc;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Scanner;
 
-//TODO add exception class
 public class Submenus {
     private static InputReader reader = InputReader.getInputReader();
     private Sorting sorting = new Sorting();
     private KMPSearch search = new KMPSearch();
+    private DocumentLibrary library = DocumentLibrary.getLibrary();
 
     public void showHandleDocumentMenu() throws IOException {
         int userInput = 0;
@@ -23,16 +15,16 @@ public class Submenus {
             userInput = reader.getInt();
             switch (userInput) {
                 case 1:
-                        DocumentLibrary.getLibrary().createNewTxtFile();
+                    library.createNewTxtFile();
                     break;
                 case 2:
-                        DocumentLibrary.getLibrary().deleteTxtFileFromLocalAndList();
+                    library.deleteTxtFileFromLocalAndList();
                     break;
                 case 3:
-                    DocumentLibrary.getLibrary().printAllTitles();
+                    library.printAllTitles();
                     break;
                 case 4:
-                    DocumentLibrary.getLibrary().chooseTitleToPrint();
+                    library.chooseTitleToPrint();
                     break;
                 case 5:
                     break;
@@ -85,7 +77,6 @@ public class Submenus {
                     break;
                 default:
                     System.out.println("Its not an alternative in the menu, please try again.");
-                    break;
             }
         }
     }

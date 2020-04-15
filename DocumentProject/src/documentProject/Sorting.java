@@ -2,12 +2,13 @@ package documentProject;
 
 import java.io.*;
 import java.util.Comparator;
-
 /**
  * methods for sorting texts is places in the Sorting class
  * @author Anara
  */
 public class Sorting {
+    private InputReader reader = InputReader.getInputReader();
+    private DocumentLibrary library = DocumentLibrary.getLibrary();
     /**
      * quick sorting algorithm is called to sort words in documents
      * @param words all with upper case and lower case sorted together
@@ -20,18 +21,18 @@ public class Sorting {
      * method to sort titles of the text files
      */
     public void sortTitles() {
-        String[] titles = new File(DifferentLocalStoragePaths.getDocPath() + "\\out\\production\\DocumentProject\\documentPackage\\")
-                .list();
-        Sorting.quickSort(titles);
-        System.out.println();
-        //assert titles != null;
-        if (titles != null) {
-            for (String word : titles) {
-                System.out.println(word);
-            }
+        if (library.getDocumentList().size()>1) {
+        String[] titlesInArray = getTitlesInArray();
+        quickSort(titlesInArray);
+        printSortedArrays(titlesInArray,"librarytitles");
         }
-        System.out.println();
-        System.out.println();
+    }
+    private String[] getTitlesInArray() {
+        String[] titles = new String[library.getDocumentList().size()];
+        for (int i = 0; i<titles.length;i++) {
+            titles[i] = library.getDocumentList().get(i).getTitle();
+        }
+        return titles;
     }
     /**
      * method for sorting texts in the files
@@ -39,28 +40,38 @@ public class Sorting {
      * either we quit to the sort menu by pressing "q"
      */
     public void sortText() {
-        System.out.println("Enter txt file name");
-        String filename = InputReader.getString();
-
-        String wordsString = DocumentLibrary.getLibrary().getTextContent(filename);
-        while (wordsString == null) {
-            System.out.println("File does not exist. Please enter the name of the document or go back to the sort menu by pressing [q]");
-
-            filename = InputReader.getString();
-            if (filename.equals("q")) {
-               new Submenus().sortMenu();
-                return;
+        library.readInTitle();
+        String title = library.getTitle();
+        String content = library.getTextContent(title);
+        if (content!=null) {
+            String[] words = library.createStringArray(content);
+            quickSort(words);
+            printSortedArrays(words,title);
+            if (askForSaveSort()){
+                saveSorted(title,words);
             }
-            wordsString = DocumentLibrary.getLibrary().getTextContent(filename);
         }
-        String[] words = DocumentLibrary.getLibrary().createStringArray(wordsString);
-        Sorting.quickSort(words);
-        System.out.println("Words in " + filename + ":");
-        for (String word : words) {
+        else {
+            System.out.println("There is no \""+title+"\" in the library.");
+        }
+    }
+    private void printSortedArrays(String[] parts, String parent) {
+        System.out.println("Sorted " + parent + ":");
+        for (String word : parts) {
             System.out.println(word);
         }
-        System.out.println();
-        saveSorted(filename, words);
+    }
+
+    private boolean askForSaveSort() {
+        String saveAnswer = "";
+        System.out.println("Enter \"save\" to save the document as sorted or enter \"exit\".");
+        while (saveAnswer.equals("")) {
+            saveAnswer = reader.getString();
+            if (saveAnswer.equals("save")) {
+               return true;
+            }
+        }
+        return false;
     }
     /**
      * saveSorted method updates the document after choosing it to be saved as sorted by pressing "y"
@@ -69,16 +80,13 @@ public class Sorting {
      * @param words gets saved as a sorted array
      */
     private void saveSorted(String filename, String[] words) {
-        System.out.println("Would you like to save the document as sorted one? y / n");
-        if (InputReader.getString().equals("y")) {
-            try {
-                DocumentLibrary.getLibrary().updateFile(filename, String.join(" ", words));
-                DocumentLibrary.getLibrary().updateTextContent(filename, String.join(" ", words));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            System.out.println();
-            System.out.println();
+        try {
+            library.updateFile(filename, String.join(" ", words));
+            library.updateTextContent(filename, String.join(" ", words));
+            System.out.println("The sorting is saved.");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
