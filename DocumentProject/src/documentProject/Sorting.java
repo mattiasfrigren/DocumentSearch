@@ -46,7 +46,8 @@ public class Sorting {
     }
     /**
      * Method for sorting words in a document. It calls the sorting algorithm with the words,
-     * print the new order and ask the user if he wants to save the new order.
+     * print the new order and ask the user if he wants to save the new order. If the document is to big to
+     * sort it will be stackoverflow and therefore it catches this.
      */
     public void sortText() throws IOException {
         library.readInTitle();
@@ -62,7 +63,7 @@ public class Sorting {
                 }
             }
             catch (StackOverflowError s) {
-            System.out.println(s.getMessage());
+            System.err.println("The document is to large to sort, please try another next time.");
             }
         }
         else {
