@@ -21,25 +21,28 @@ public class Sorting {
      * method to sort titles and print it to the user.
      */
     public void sortTitles() {
-        if (library.getDocumentList().size()>1) {
+        if (library.getDocumentList().size()>0) {
             String[] titlesInArray = getTitlesInArray();
             quickSort(titlesInArray);
             printSortedArrays(titlesInArray,"librarytitles",true);
         }
         else {
-            System.out.println("There is no titles(or only one) to sort in the library.");
+            System.out.println("There is no titles to sort in the library.");
         }
     }
     /**
      * Method to get all the titles in the documentlist in an array.
      * @return the Stringarray of titles.
      */
-    private String[] getTitlesInArray() {
-        String[] titles = new String[library.getDocumentList().size()];
-        for (int i = 0; i<titles.length;i++) {
-            titles[i] = library.getDocumentList().get(i).getTitle()+".txt";
+    public String[] getTitlesInArray() {
+        if (library.getDocumentList().size()>0) {
+            String[] titles = new String[library.getDocumentList().size()];
+            for (int i = 0; i < titles.length; i++) {
+                titles[i] = library.getDocumentList().get(i).getTitle();
+            }
+            return titles;
         }
-        return titles;
+        return null;
     }
     /**
      * Method for sorting words in a document. It calls the sorting algorithm with the words,
@@ -50,11 +53,16 @@ public class Sorting {
         String title = library.getTitle();
         String content = library.getTextContent(title);
         if (content!=null) {
-            String[] words = library.createStringArray(content);
-            quickSort(words);
-            printSortedArrays(words,title,false);
-            if (askForSaveSort()){
-                saveSorted(title,words);
+            try {
+                String[] words = library.createStringArray(content);
+                quickSort(words);
+                printSortedArrays(words, title, false);
+                if (askForSaveSort()) {
+                    saveSorted(title, words);
+                }
+            }
+            catch (StackOverflowError s) {
+            System.out.println(s.getMessage());
             }
         }
         else {
@@ -79,10 +87,11 @@ public class Sorting {
      * This method asks if the user wants to save the new sortingorder.
      * @return true if the user wants to save it
      */
-    private boolean askForSaveSort() {
+    public boolean askForSaveSort() {
         String saveAnswer = "";
         System.out.println("\nEnter \"save\" to save the document as sorted or enter \"exit\".");
         while (saveAnswer.equals("")) {
+            // saveAnswer = "save"; //(for testing)
             saveAnswer = reader.getString().toLowerCase();
             if (saveAnswer.equals("save")) {
                return true;
@@ -95,7 +104,7 @@ public class Sorting {
      * @param title The title which will be overwritten.
      * @param words The content which will be overwritten.
      */
-    private void saveSorted(String title, String[] words) throws IOException {
+    public void saveSorted(String title, String[] words) throws IOException {
         library.updateFile(title, String.join(" ", words));
         library.updateTextContent(title, String.join(" ", words));
         System.out.println("The sorting is saved.");
