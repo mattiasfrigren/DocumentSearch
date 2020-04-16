@@ -12,6 +12,7 @@ public class KMPSearch {
     private DocumentLibrary library = DocumentLibrary.getLibrary();
     public String titleSearch;
     private String maxAppearing = "";
+
     private static int firstIndex;
 
     /**
@@ -56,7 +57,7 @@ public class KMPSearch {
         String textContent = library.getTextContent(library.getTitle());
         if (textContent!=null && textContent.length()>0) {
             String searchWord = enterSearchWord();
-            int[] result = searchKMP(textContent, searchWord);
+            int[] result = searchKMP(textContent.toLowerCase(), searchWord.toLowerCase());
             if (result.length != 0) {
                 System.out.print("The length of the document \""+library.getTitle()+ "\" is "+textContent.length()+
                         " chars.\nThe word \"" + searchWord + "\" appear in index(es):");
@@ -171,10 +172,10 @@ public class KMPSearch {
      */
     public void searchForTitle(){
         maxAppearing ="";
-        // titleSearch = "test";  <---- for testing
+       //  titleSearch = "testFile"; // <---- for testing
         String titleSearch = enterSearchWord();
         for (TxtDocument doc:library.getDocumentList()) {
-           int[] titleArray = searchKMP(doc.getTitle().toLowerCase(),titleSearch);
+           int[] titleArray = searchKMP(doc.getTitle().toLowerCase(),titleSearch.toLowerCase());
             if (titleArray.length!=0){
                 maxAppearing +="\""+doc.getTitle()+".txt\" | ";
             }
@@ -193,4 +194,10 @@ public class KMPSearch {
     public String getMaxAppearing() {
         return maxAppearing;
     }
+
+    public static int getFirstIndex() {
+        return firstIndex;
+    }
+
+
 }

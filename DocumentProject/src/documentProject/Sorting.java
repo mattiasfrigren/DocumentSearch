@@ -24,7 +24,7 @@ public class Sorting {
         if (library.getDocumentList().size()>1) {
             String[] titlesInArray = getTitlesInArray();
             quickSort(titlesInArray);
-            printSortedArrays(titlesInArray,"librarytitles");
+            printSortedArrays(titlesInArray,"librarytitles",true);
         }
         else {
             System.out.println("There is no titles(or only one) to sort in the library.");
@@ -37,7 +37,7 @@ public class Sorting {
     private String[] getTitlesInArray() {
         String[] titles = new String[library.getDocumentList().size()];
         for (int i = 0; i<titles.length;i++) {
-            titles[i] = library.getDocumentList().get(i).getTitle();
+            titles[i] = library.getDocumentList().get(i).getTitle()+".txt";
         }
         return titles;
     }
@@ -52,7 +52,7 @@ public class Sorting {
         if (content!=null) {
             String[] words = library.createStringArray(content);
             quickSort(words);
-            printSortedArrays(words,title);
+            printSortedArrays(words,title,false);
             if (askForSaveSort()){
                 saveSorted(title,words);
             }
@@ -67,10 +67,11 @@ public class Sorting {
      * @param parts The words
      * @param parent If it titles or content
      */
-    private void printSortedArrays(String[] parts, String parent) {
+    private void printSortedArrays(String[] parts, String parent, boolean isTitle) {
         System.out.println("Sorted " + parent + ":");
         for (String word : parts) {
-            System.out.println(word);
+            if (isTitle) {System.out.println(word+", ");}
+            else System.out.print(word+", ");
         }
     }
 
@@ -80,9 +81,9 @@ public class Sorting {
      */
     private boolean askForSaveSort() {
         String saveAnswer = "";
-        System.out.println("Enter \"save\" to save the document as sorted or enter \"exit\".");
+        System.out.println("\nEnter \"save\" to save the document as sorted or enter \"exit\".");
         while (saveAnswer.equals("")) {
-            saveAnswer = reader.getString();
+            saveAnswer = reader.getString().toLowerCase();
             if (saveAnswer.equals("save")) {
                return true;
             }

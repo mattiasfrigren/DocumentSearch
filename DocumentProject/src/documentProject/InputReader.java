@@ -17,8 +17,9 @@ public class InputReader {
      */
     private static Boolean getIntThrowed;
     private static Boolean getStringThrowed;
+    // set "-1" for inputtedNumber in tests and "testFile" for inputtedName.
     private static Object inputtedNumber;
-    private static String inputtedName = "";
+    private static String inputtedName ="";
     /**
      * Handling integers
      * @return valid integer or 0

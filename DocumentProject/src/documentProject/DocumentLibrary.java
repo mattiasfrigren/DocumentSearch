@@ -18,7 +18,9 @@ public class DocumentLibrary {
     private static String title ="";
     private static String textContent = "";
     private static String docPath = DifferentLocalStoragePaths.getDocPath();
+
     private static int updateIndex;
+
     private static boolean savedDoc =false;
     public static DocumentLibrary getLibrary(){
         if (library ==null){
@@ -172,7 +174,7 @@ public class DocumentLibrary {
 
     public String getTextContent(String title) {
         for (TxtDocument text:documentList) {
-            if (text.getTitle().equals(title)) {
+            if (text.getTitle().toLowerCase().equals(title.toLowerCase())) {
             return text.getTextContent(); }
         }
         return null;
@@ -191,4 +193,14 @@ public class DocumentLibrary {
     public static void setTextContent(String textContent) {
         DocumentLibrary.textContent = textContent;
     }
+
+    public static boolean isSavedDoc() {
+        return savedDoc;
+    }
+
+    public static void setSavedDoc(boolean savedDoc) {
+        DocumentLibrary.savedDoc = savedDoc;
+    }
+
+
 }
