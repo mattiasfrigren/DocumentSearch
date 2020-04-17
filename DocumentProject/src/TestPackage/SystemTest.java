@@ -5,6 +5,8 @@ import org.junit.jupiter.api.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -65,9 +67,9 @@ class SystemTest {
     @Test
     @Order(5)
     void deleteFileTest() throws IOException {
-        File testFile = new File(docPath+"\\DocumentProject\\src\\documentPackage\\testFile.txt");
+        File testFile = new File(docPath+"\\DocumentProject\\src\\documentPackage\\"+testLibrary.getTitle()+".txt");
         testFile.createNewFile();
-      //  testLibrary.deleteTxtFile((String) testFile.getName().subSequence(0,testFile.getName().length()-4));
+        testLibrary.deleteTxtFile();
         assertFalse(testFile.exists());
 
     }
@@ -75,9 +77,11 @@ class SystemTest {
     @Order(6)
     void deleteDocumentList(){
         TxtDocument testTxt = new TxtDocument("deleteTest","deleteContent");
+        testLibrary.setSavedDoc(true);
         testLibrary.addToList(testTxt);
         assertTrue(testLibrary.getDocumentList().contains(testTxt));
-       // testLibrary.deleteTxtDocument(testTxt);
+        testLibrary.documentExists(testTxt.getTitle());
+        testLibrary.deleteTxtDocument();
         assertFalse(testLibrary.getDocumentList().contains(testTxt));
     }
     @Test
@@ -89,10 +93,19 @@ class SystemTest {
     @Test
     @Order(8)
     void checkIfDocExists() throws IOException {
-        boolean doesExist = testLibrary.documentExists("SystemTestTitle");
+        testLibrary.createNewTxtFile();
+        boolean doesExist = testLibrary.documentExists("testFile");
         boolean doesNotExsist = testLibrary.documentExists("testp");
         assertTrue(doesNotExsist);
         assertFalse(doesExist);
+    }
+    @Test
+    @Order(9)
+    void updateFileTest() throws IOException {
+        assertEquals("testFile",testLibrary.getDocumentList().get(11).getTextContent());
+        testLibrary.updateFile("testFile","newTestFile");
+        File txtFile = new File(docPath+"\\DocumentProject\\src\\documentPackage\\testFile.txt");
+        assertTrue(Files.readString(Paths.get(txtFile.getPath())).equals("newTestFile"));
     }
     @Test
     void compileStringArray() {
@@ -157,26 +170,26 @@ class SystemTest {
 
     @Test
     void getTextContetTest() throws IOException {
-        assertEquals("SystemTest that will make sure to be executed. we will be able to sort and search in this document.",
+        assertEquals("testFile",
                 DocumentLibrary.getLibrary().getTextContent(DocumentLibrary.getLibrary().getTitle()));
     }
 
     @Test
     void testGetMaxCompareDocuments() throws IOException {
-        assertEquals(7,kMPSearch.getMax("s"));
+        assertEquals(46411,kMPSearch.getMax("s"));
     }
 
     @Test
     void testTitleCompareDocuments() throws IOException {
-        kMPSearch.getMax("s");
-        assertTrue(kMPSearch.getMaxAppearing().equals("SystemTestTitle.txt"));
+        kMPSearch.getMax("testFile");
+        assertTrue(kMPSearch.getMaxAppearing().equals("testFile.txt\""+ " (The first index is at "+kMPSearch.getFirstIndex()+")"));
     }
 
     @Test
     void testSearchTitle() throws IOException {
-        kMPSearch.titleSearch = "test";
+        kMPSearch.titleSearch = "testFile";
         kMPSearch.searchForTitle();
-        assertEquals("SystemTestTitle.txt ",kMPSearch.getMaxAppearing());
+        assertEquals("\"testFile.txt\" | ",kMPSearch.getMaxAppearing());
     }
 
 

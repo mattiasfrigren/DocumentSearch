@@ -62,7 +62,7 @@ class InputReaderTest {
     @Test
     void testGetStringWithAValidString() {
         InputReader testreader = InputReader.getInputReader();
-        testreader.setInputtedName("Banan");
-        Assertions.assertEquals("Banan",testreader.getString());
+        testreader.setInputtedName("testFile");
+        Assertions.assertEquals("testFile",testreader.getString());
     }
 }

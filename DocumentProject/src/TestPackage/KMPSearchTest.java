@@ -53,7 +53,8 @@ class KMPSearchTest {
     void getTextContentTest() throws IOException {
         DocumentLibrary.getLibrary().readInFilesToList();
         KMPSearch kMPSearch = new KMPSearch();
-        assertEquals("SystemTest that will make sure to be executed. we will be able to sort and search in this document."
+        DocumentLibrary.getLibrary().readInTitle();
+        assertEquals("testFile"
         ,DocumentLibrary.getLibrary().getTextContent(DocumentLibrary.getLibrary().getTitle()));
     }
 
@@ -65,7 +66,7 @@ class KMPSearchTest {
     void testGetMaxCompareDocuments() throws IOException {
         DocumentLibrary.getLibrary().readInFilesToList();
         KMPSearch kMPSearch = new KMPSearch();
-        assertEquals(7,kMPSearch.getMax("s"));
+        assertEquals(46411,kMPSearch.getMax("s"));
     }
     /**
      * Test to ensure that the method set the correct title of the most relevant document.
@@ -75,8 +76,8 @@ class KMPSearchTest {
     void testTitleCompareDocuments() throws IOException {
         DocumentLibrary.getLibrary().readInFilesToList();
         KMPSearch kMPSearch = new KMPSearch();
-        kMPSearch.getMax("s");
-        assertTrue(kMPSearch.getMaxAppearing().equals("SystemTestTitle.txt"));
+        kMPSearch.getMax("testFile");
+        assertTrue(kMPSearch.getMaxAppearing().equals("testFile.txt\""+ " (The first index is at "+kMPSearch.getFirstIndex()+")"));
     }
 
     /**
@@ -89,6 +90,6 @@ class KMPSearchTest {
         KMPSearch kMPSearch = new KMPSearch();
         kMPSearch.titleSearch = "test";
         kMPSearch.searchForTitle();
-        assertEquals("SystemTestTitle.txt ",kMPSearch.getMaxAppearing());
+        assertEquals("\"testFile.txt\" | ",kMPSearch.getMaxAppearing());
     }
 }

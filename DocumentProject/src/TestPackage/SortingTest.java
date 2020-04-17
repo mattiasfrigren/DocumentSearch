@@ -25,7 +25,7 @@ class SortingTest {
         DocumentLibrary library = DocumentLibrary.getLibrary();
         library.createNewTxtFile();
         String[] titles = sorting.getTitlesInArray();
-        assertEquals("testFile",titles[titles.length-1]);
+        assertEquals("ööööääåådoc",titles[titles.length-1]);
     }
 
     /**

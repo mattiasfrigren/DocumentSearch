@@ -7,8 +7,6 @@ package documentProject;
 public class TxtDocument {
     private String title;
     private String textContent;
-    private boolean isEdit;
-    private boolean isSorted;
 
     /**
      * The constructor.
@@ -18,8 +16,6 @@ public class TxtDocument {
     public TxtDocument(String title, String textContent) {
     this.title = title;
     this.textContent = textContent;
-    this.isEdit = false;
-    this.isSorted = false;
     }
     /**
      * Get the title
@@ -45,20 +41,5 @@ public class TxtDocument {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-    public boolean isEdit() {
-        return isEdit;
-    }
-
-    public void setEdit(boolean edit) {
-        isEdit = edit;
-    }
-
-    public boolean isSorted() {
-        return isSorted;
-    }
-
-    public void setSorted(boolean sorted) {
-        isSorted = sorted;
     }
 }

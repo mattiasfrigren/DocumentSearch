@@ -92,8 +92,8 @@ public class Sorting {
         String saveAnswer = "";
         System.out.println("\nEnter \"save\" to save the document as sorted or enter \"exit\".");
         while (saveAnswer.equals("")) {
-            // saveAnswer = "save"; //(for testing)
-            saveAnswer = reader.getString().toLowerCase();
+             saveAnswer = "save"; //(for testing)
+            //saveAnswer = reader.getString().toLowerCase();
             if (saveAnswer.equals("save")) {
                return true;
             }

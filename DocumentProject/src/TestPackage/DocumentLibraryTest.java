@@ -2,6 +2,7 @@ package TestPackage;
 
 import documentProject.DifferentLocalStoragePaths;
 import documentProject.DocumentLibrary;
+import documentProject.InputReader;
 import documentProject.TxtDocument;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -10,6 +11,8 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -64,9 +67,10 @@ public class DocumentLibraryTest {
     @Order(5)
     void deleteFileTest() throws IOException {
         DocumentLibrary testLibrary = DocumentLibrary.getLibrary();
-        File testFile = new File(docPath+"\\DocumentProject\\src\\documentPackage\\testFile.txt");
+        testLibrary.readInTitle();
+        File testFile = new File(docPath+"\\DocumentProject\\src\\documentPackage\\"+testLibrary.getTitle()+".txt");
         testFile.createNewFile();
-       // testLibrary.deleteTxtFile((String) testFile.getName().subSequence(0,testFile.getName().length()-4));
+        testLibrary.deleteTxtFile();
         assertFalse(testFile.exists());
 
     }
@@ -75,9 +79,11 @@ public class DocumentLibraryTest {
     void deleteDocumentList(){
         DocumentLibrary testLibrary = DocumentLibrary.getLibrary();
         TxtDocument testTxt = new TxtDocument("deleteTest","deleteContent");
+        testLibrary.setSavedDoc(true);
         testLibrary.addToList(testTxt);
         assertTrue(testLibrary.getDocumentList().contains(testTxt));
-       // testLibrary.deleteTxtDocument(testTxt);
+        testLibrary.documentExists(testTxt.getTitle());
+        testLibrary.deleteTxtDocument();
         assertFalse(testLibrary.getDocumentList().contains(testTxt));
     }
     @Test
@@ -92,10 +98,20 @@ public class DocumentLibraryTest {
     void checkIfDocExists() throws IOException {
         DocumentLibrary.getLibrary().readInFilesToList();
         DocumentLibrary testLibrary = DocumentLibrary.getLibrary();
-        boolean doesExist = testLibrary.documentExists("SystemTestTitle");
+        testLibrary.createNewTxtFile();
+        boolean doesExist = testLibrary.documentExists("testFile");
         boolean doesNotExsist = testLibrary.documentExists("testp");
         assertTrue(doesNotExsist);
         assertFalse(doesExist);
+    }
+    @Test
+    @Order(9)
+    void updateFileTest() throws IOException {
+        DocumentLibrary.getLibrary().readInFilesToList();
+        assertEquals("testFile",DocumentLibrary.getLibrary().getDocumentList().get(11).getTextContent());
+        DocumentLibrary.getLibrary().updateFile("testFile","newTestFile");
+        File txtFile = new File(docPath+"\\DocumentProject\\src\\documentPackage\\testFile.txt");
+        assertTrue(Files.readString(Paths.get(txtFile.getPath())).equals("newTestFile"));
     }
 
 }
