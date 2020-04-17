@@ -18,15 +18,15 @@ public class InputReader {
     private static Boolean getIntThrowed;
     private static Boolean getStringThrowed;
     // set "-1" for inputtedNumber in tests and "testFile" for inputtedName.
-    private static Object inputtedNumber =-1;
-    private static String inputtedName ="testFile";
+    private static Object inputtedNumber;
+    private static String inputtedName="";
     /**
      * Handling integers
      * @return valid integer or 0
      */
     public static int getInt() {
         try {
-            //inputtedNumber = sc.nextInt();
+            inputtedNumber = sc.nextInt();
             if (!inputtedNumber.getClass().getSimpleName().equals("Integer")) {
                 getIntThrowed = true;
                 throw new InputMismatchException();
@@ -44,7 +44,7 @@ public class InputReader {
      */
     public static String getString() {
         sc = new Scanner(System.in);
-       // inputtedName =sc.nextLine();
+        inputtedName =sc.nextLine();
         try {
             if (inputtedName.equals("")) {
                 getStringThrowed = true;

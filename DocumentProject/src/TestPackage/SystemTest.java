@@ -29,10 +29,11 @@ class SystemTest {
         File allTestFIles = new File(docPath+"\\DocumentProject\\src\\documentPackage");
         File[] fileArr = allTestFIles.listFiles();
         testLibrary.readInFilesToList();
-        assertTrue(fileArr.length == testLibrary.getDocumentList().size());
+        assertTrue((fileArr.length-1) == testLibrary.getDocumentList().size());
         for (File file : fileArr) {
+            if (file.getName().endsWith(".txt")){
             assertTrue(file.getName().equals((testLibrary.getDocumentList().get(i).getTitle())+".txt"));
-            i++;
+            i++;}
         }
     }
 
@@ -102,7 +103,10 @@ class SystemTest {
     @Test
     @Order(9)
     void updateFileTest() throws IOException {
-        assertEquals("testFile",testLibrary.getDocumentList().get(11).getTextContent());
+        testLibrary.updateFile("testFile","testFile");
+        File txtFile1 = new File(docPath+"\\DocumentProject\\src\\documentPackage\\testFile.txt");
+        assertTrue(Files.readString(Paths.get(txtFile1.getPath())).equals("testFile"));
+
         testLibrary.updateFile("testFile","newTestFile");
         File txtFile = new File(docPath+"\\DocumentProject\\src\\documentPackage\\testFile.txt");
         assertTrue(Files.readString(Paths.get(txtFile.getPath())).equals("newTestFile"));
@@ -170,6 +174,7 @@ class SystemTest {
 
     @Test
     void getTextContetTest() throws IOException {
+        testLibrary.updateTextContent("testFile","testFile");
         assertEquals("testFile",
                 DocumentLibrary.getLibrary().getTextContent(DocumentLibrary.getLibrary().getTitle()));
     }

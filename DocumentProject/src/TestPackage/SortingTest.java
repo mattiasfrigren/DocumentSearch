@@ -21,6 +21,7 @@ class SortingTest {
      */
     @Test
     void getTitlesInArray() throws IOException {
+        DocumentLibrary.getLibrary().readInFilesToList();
         Sorting sorting = new Sorting();
         DocumentLibrary library = DocumentLibrary.getLibrary();
         library.createNewTxtFile();

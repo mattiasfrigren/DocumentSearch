@@ -54,6 +54,7 @@ class KMPSearchTest {
         DocumentLibrary.getLibrary().readInFilesToList();
         KMPSearch kMPSearch = new KMPSearch();
         DocumentLibrary.getLibrary().readInTitle();
+        DocumentLibrary.getLibrary().updateTextContent("testFile","testFile");
         assertEquals("testFile"
         ,DocumentLibrary.getLibrary().getTextContent(DocumentLibrary.getLibrary().getTitle()));
     }

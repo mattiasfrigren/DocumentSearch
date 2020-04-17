@@ -172,8 +172,8 @@ public class KMPSearch {
      */
     public void searchForTitle(){
         maxAppearing ="";
-         titleSearch = "testFile"; // <---- for testing
-       // String titleSearch = enterSearchWord();
+        //titleSearch = "testFile"; // <---- for testing
+        String titleSearch = enterSearchWord();
         for (TxtDocument doc:library.getDocumentList()) {
            int[] titleArray = searchKMP(doc.getTitle().toLowerCase(),titleSearch.toLowerCase());
             if (titleArray.length!=0){

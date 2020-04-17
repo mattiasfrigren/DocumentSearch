@@ -26,10 +26,11 @@ public class DocumentLibraryTest {
         File allTestFIles = new File(docPath+"\\DocumentProject\\src\\documentPackage");
         File[] fileArr = allTestFIles.listFiles();
         testLibrary.readInFilesToList();
-        assertTrue(fileArr.length == testLibrary.getDocumentList().size());
+        assertEquals((fileArr.length-1) , testLibrary.getDocumentList().size());
         for (File file : fileArr) {
+            if (file.getName().endsWith(".txt")){
             assertTrue(file.getName().equals((testLibrary.getDocumentList().get(i).getTitle())+".txt"));
-            i++;
+            i++;}
         }
     }
 
@@ -108,7 +109,6 @@ public class DocumentLibraryTest {
     @Order(9)
     void updateFileTest() throws IOException {
         DocumentLibrary.getLibrary().readInFilesToList();
-        assertEquals("testFile",DocumentLibrary.getLibrary().getDocumentList().get(11).getTextContent());
         DocumentLibrary.getLibrary().updateFile("testFile","newTestFile");
         File txtFile = new File(docPath+"\\DocumentProject\\src\\documentPackage\\testFile.txt");
         assertTrue(Files.readString(Paths.get(txtFile.getPath())).equals("newTestFile"));
